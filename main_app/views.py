@@ -44,3 +44,10 @@ def create_comment(request, event_id):
     event = Event.objects.get(id=event_id)
     comment = Comment.objects.create(user=request.user, event=event, content=request.POST.get('content', ''))
     return redirect('event_detail', event_id=event_id)
+
+def delete_comment(request, event_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+    return redirect('event_detail', event_id=event_id)
+    
+    
