@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from .models import Event
 
 
-
+# Create your views here.
 def home(request):
     return render(request, 'index.html')
-# Create your views here.
 
 def signup(request):
     error_message = ''
@@ -27,3 +28,11 @@ def signup(request):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+def events_index(request):
+    return render(request, 'events/index.html')
+
+class EventCreate(CreateView):
+    model = Event
+    fields = '__all__'
+
