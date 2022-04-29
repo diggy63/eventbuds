@@ -1,21 +1,29 @@
-{% extends 'base.html' %}
-
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <h1>Event {{ event.event_name }}</h1>
 
 <ul>
-    <li>{{ event.event_type }}</li>
-    <li>{{ event.location }}</li>
-    <li>{{ event.artist }}</li>
-    <li>{{ event.image }}</li>
-    <li>{{ event.description}}</li>
-    <li>{{ event.date }}</li>
-    <li>{{ event.url_ticketmaster }}</li>
-</ul> 
+  <li>{{ event.event_type }}</li>
+  <li>{{ event.location }}</li>
+  <li>{{ event.artist }}</li>
+  <li>{{ event.image }}</li>
+  <li>{{ event.description}}</li>
+  <li>{{ event.date }}</li>
+  <li>{{ event.url_ticketmaster }}</li>
+</ul>
 
-   
+<form method="POST" action="{% url 'create_comment' event.id %}">
+  {% csrf_token %}
+  <input type="textarea" name="content" />
+  <input type="submit" name="submit" />
+</form>
 
-{% endblock content %}
-    
+{% for comment in event.comment_set.all %}
+<ul>
+  <li>{{comment.user}}</li>
+  <li>{{comment.content}}</li>
+</ul>
+<a href="{% url 'delete_comment' event.id comment.id %}">X</a>
+{% empty %}
+<p>No comments yet</p>
+{% endfor %} {% endblock content %}

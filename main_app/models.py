@@ -26,4 +26,4 @@ class Comment(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.event
+        return self.content
