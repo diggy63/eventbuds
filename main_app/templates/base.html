@@ -30,7 +30,8 @@
             <!-- changes below -->
             {% if user.is_authenticated %}
             <li><a href="">User</a></li>
-            <li><a href="">Events</a></li>
+            <li><a href="{% url 'events' %}">Events</a></li>
+            <li><a href="{% url 'events_create' %}">Add An Event</a></li>
             {% else %}
             <li><a href="{% url 'signup' %}">Sign Up</a></li>
             <li><a href="{% url 'login' %}">Log In</a></li>
