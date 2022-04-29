@@ -20,4 +20,10 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
-    
+class Comment(models.Model):
+    content = models.TextField(max_length=400)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.event
