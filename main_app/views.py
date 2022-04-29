@@ -30,7 +30,8 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 def events_index(request):
-    return render(request, 'events/index.html')
+    events = Event.objects.all()
+    return render(request, 'events/index.html', {'events': events})
 
 class EventCreate(CreateView):
     model = Event

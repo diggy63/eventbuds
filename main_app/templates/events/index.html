@@ -2,5 +2,20 @@
 
 {% block content %}
 
-<h1>Hello</h1>
+<h1>Events</h1>
+
+
+{% for event in events %}
+<h3>{{ event.event_name }}</h3>
+<ul>
+    <li>{{ event.event_type }}</li>
+    <li>{{ event.location }}</li>
+    <li>{{ event.artist }}</li>
+    <li>{{ event.image }}</li>
+    <li>{{ event.description}}</li>
+    <li>{{ event.date }}</li>
+    <li>{{ event.url_ticketmaster }}</li>
+</ul> 
+{% endfor %}
+   
 {% endblock content %}
