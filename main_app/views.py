@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Event
+from .models import Event, Comment
 
 
 # Create your views here.
@@ -40,3 +40,7 @@ class EventCreate(CreateView):
     model = Event
     fields = '__all__'
 
+def create_comment(request, event_id):
+    event = Event.objects.get(id=event_id)
+    comment = Comment.objects.create(user=request.user, event=event, content=request.POST.get('content', ''))
+    return redirect('event_detail', event_id=event_id)

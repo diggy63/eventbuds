@@ -15,7 +15,11 @@
     <li>{{ event.url_ticketmaster }}</li>
 </ul> 
 
-   
+<form method="POST" action="{% url 'create_comment' event.id %}">
+    {% csrf_token %}
+    <input type="textarea" name="content">
+    <input type="submit" name="submit">
+</form>
 
 {% endblock content %}
     
