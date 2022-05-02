@@ -75,3 +75,7 @@ def add_photo(request, user_id):
     except:
       print('An error occurred uploading to S3.')
   return redirect('/user')  
+
+def going_event(request, event_id, user_id):
+    Event.objects.get(id=event_id).user.add(user_id)
+    return redirect('/user') 

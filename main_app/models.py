@@ -15,7 +15,7 @@ class Event(models.Model):
     user = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
-        return self.event_name
+        return f'{self.user}'
 
     def get_absolute_url(self):
         return reverse('home')
