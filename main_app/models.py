@@ -34,4 +34,4 @@ class User_Avatar(models.Model):
     bio = models.TextField(max_length=200)
 
     def __str__(self):
-        return f"Avatar for user_id: {self.user_id} @{self.url}."
+        return f"Avatar for user_id: {self.user_id} {self.events}."
