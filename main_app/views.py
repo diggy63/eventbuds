@@ -49,5 +49,9 @@ def delete_comment(request, event_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
     return redirect('event_detail', event_id=event_id)
-    
+
+def search(request):
+    query = request.GET.get('q')
+    print(query)
+    return render(request, 'events/search.html')
     

@@ -1,0 +1,11 @@
+{% include 'base.html' %}
+
+
+{% block content %}
+    <h1>Search for events</h1>
+    <form method="GET" action="{% url 'search' %}">
+        <input type="search" name="q" placeholder="Search...">
+        <input type="submit" name="submit">
+    </form>
+{% endblock content %}
+    
