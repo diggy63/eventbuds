@@ -8,7 +8,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'catcollectorbucket01'
+BUCKET = 'catcollectorbucketdk'
 
 # Create your views here.
 def home(request):
