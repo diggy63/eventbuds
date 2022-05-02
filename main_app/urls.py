@@ -10,4 +10,5 @@ urlpatterns = [
     path('events/<int:event_id>/create_comment', views.create_comment, name="create_comment"),
     path('events/<int:event_id>/delete/<int:comment_id>', views.delete_comment, name="delete_comment"),
     path('user/', views.user_detail, name='user_detail'),
+    path('user/add_photo/<int:user_id>', views.add_photo, name='add_photo'),
 ]

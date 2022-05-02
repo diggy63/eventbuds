@@ -3,10 +3,12 @@ from django.http import HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Event, Comment
+from .models import Event, Comment, User_Avatar
 import uuid
 import boto3
 
+S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
+BUCKET = 'catcollectorbucket01'
 
 # Create your views here.
 def home(request):
@@ -38,6 +40,7 @@ def events_index(request):
 def event_detail(request, event_id):
     event = Event.objects.get(id=event_id)
     return render(request, 'events/detail.html', {'event': event})
+
 class EventCreate(CreateView):
     model = Event
     fields = '__all__'
@@ -54,3 +57,21 @@ def delete_comment(request, event_id, comment_id):
     
 def user_detail(request):
     return render(request, 'user/detail.html')
+
+def add_photo(request, user_id):
+  # photo-file will be the "name" attribute on the <input type="file">
+  photo_file = request.FILES.get('photo-file', None)
+  if photo_file:
+    s3 = boto3.client('s3')
+    # need a unique "key" for S3 / needs image file extension too
+    key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+    # just in case something goes wrong
+    try:
+      s3.upload_fileobj(photo_file, BUCKET, key)
+      #build the full url string
+      url = f"{S3_BASE_URL}{BUCKET}/{key}"
+      # we can assign to cat_id or cat (if you have a cat object)
+      User_Avatar.objects.create(url=url, user_id=user_id)
+    except:
+      print('An error occurred uploading to S3.')
+  return redirect('/user')  
