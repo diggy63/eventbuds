@@ -1,3 +1,4 @@
+from operator import indexOf
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login
@@ -56,6 +57,13 @@ def search(request):
     query = request.GET.get('q')
     key = os.getenv('ACCESS_TOKEN')
     r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?keyword={query}&apikey={key}')
-    print(r.json())
-    return render(request, 'events/search.html', {'results': r})
+    r_json = r.json()
+    embed = r_json.get('_embedded', {})
+    events = embed.get('events', [])
+    for idx, event in enumerate(events):
+        embed = event.get('_embedded')
+        venues = embed.get('venues')
+        events[idx]['venues'] = venues
+    print(events)
+    return render(request, 'events/search.html', {'events': events})
     
