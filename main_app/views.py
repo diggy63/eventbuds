@@ -8,7 +8,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'catcollectorbucket01'
+BUCKET = 'catcollectorbucketdk'
 
 # Create your views here.
 def home(request):
@@ -75,3 +75,7 @@ def add_photo(request, user_id):
     except:
       print('An error occurred uploading to S3.')
   return redirect('/user')  
+
+def going_event(request, event_id, user_id):
+    Event.objects.get(id=event_id).user.add(user_id)
+    return redirect('/user') 
