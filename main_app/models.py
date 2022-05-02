@@ -14,7 +14,7 @@ class Event(models.Model):
     url_ticketmaster = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
-        return f'{self.user}'
+        return f'{self.event_name}'
 
     def get_absolute_url(self):
         return reverse('home')
