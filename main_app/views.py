@@ -50,4 +50,5 @@ def delete_comment(request, event_id, comment_id):
     comment.delete()
     return redirect('event_detail', event_id=event_id)
     
-    
+def user_detail(request):
+    return render(request, 'user/detail.html')
