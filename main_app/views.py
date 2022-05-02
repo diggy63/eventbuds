@@ -12,7 +12,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'catcollectorbucketdk'
+BUCKET = 'catcollectorbucket01'
 
 # Create your views here.
 def home(request):
@@ -29,7 +29,7 @@ def signup(request):
             user = form.save()
             # This is how we log a user in via code
             login(request, user)
-            return redirect('home')
+            return redirect('create_user')
         else:
             error_message = 'Invalid sign up - try again'
     # A bad POST or a GET request, so render signup.html with an empty form
@@ -78,6 +78,7 @@ def user_detail(request):
 def add_photo(request, user_id):
   # photo-file will be the "name" attribute on the <input type="file">
   photo_file = request.FILES.get('photo-file', None)
+  user_bio = request.POST.get('bio', None)
   if photo_file:
     s3 = boto3.client('s3')
     # need a unique "key" for S3 / needs image file extension too
@@ -88,12 +89,26 @@ def add_photo(request, user_id):
       #build the full url string
       url = f"{S3_BASE_URL}{BUCKET}/{key}"
       # we can assign to cat_id or cat (if you have a cat object)
-      User_Avatar.objects.create(url=url, user_id=user_id)
+      User_Avatar.objects.create(url=url, user_id=user_id, bio= user_bio)
+      user = User_Avatar.objects.get(user_id= user_id)
+      user.save()
+      print(user.__dict__)
     except:
       print('An error occurred uploading to S3.')
   return redirect('/user')  
 
 def going_event(request, event_id, user_id):
-    Event.objects.get(id=event_id).user.add(user_id)
+    user = User_Avatar.objects.get(user_id=user_id)
+    user.events.add(event_id)
+    # Event.objects.get(id=event_id).user_avatar.add(user_id)
+    print(user)
     return redirect('/user') 
 
+def create_user(request):
+    return render(request, 'user/create.html')
+
+def add_bio(request, user_id):
+    user = User_Avatar.objects.get(user_id=user_id)
+    user.bio = request.GET.get('bio')
+    user.save()
+    return redirect('/user')

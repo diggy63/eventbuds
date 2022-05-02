@@ -13,23 +13,19 @@
 </div>
 <div class="card">
   <div class="card-content">
-    {% for event in user.event.all %}
-    <h1>{{ event }}</h1>
-    {% empty %}
-    <h1>there are no events</h1>
-    {% endfor %}
-  </div>
-</div>
-<form
-  action="{% url 'add_photo' user.id %}"
-  enctype="multipart/form-data"
-  method="POST"
-  class="card-panel"
->
-  {% csrf_token %}
-  <input type="file" name="photo-file" />
-  <br /><br />
-  <input type="submit" class="btn" value="Upload Photo" />
-</form>
+      <h1>{{ user_avatar.events.all }}</h1>
+    </div>
+    </div>
+    <form action="{% url 'add_bio' user.id%}" method="POST">
+      {% csrf_token %}
+      <input type="textarea" name="bio">
+      <input type="submit" class="btn" value="upload bio">
+    </form>
+<!-- <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+    {% csrf_token %}
+    <input type="file" name="photo-file">
+    <br><br>
+    <input type="submit" class="btn" value="Upload Photo">
+  </form> -->
 
 {% endblock content %}
