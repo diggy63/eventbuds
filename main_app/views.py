@@ -1,8 +1,12 @@
+from operator import indexOf
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from dotenv import load_dotenv
+from .models import Event, Comment
+import requests, os
 from .models import Event, Comment, User_Avatar
 import uuid
 import boto3
@@ -54,7 +58,19 @@ def delete_comment(request, event_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
     return redirect('event_detail', event_id=event_id)
-    
+
+def search(request):
+    query = request.GET.get('q')
+    key = os.getenv('ACCESS_TOKEN')
+    r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?keyword={query}&apikey={key}').json()
+    embed = r.get('_embedded', {})
+    events = embed.get('events', [])
+    for idx, event in enumerate(events): # transforms the json so that venues is accessible with . notation
+        embed = event.get('_embedded')
+        venues = embed.get('venues')
+        events[idx]['venues'] = venues
+    return render(request, 'events/search.html', {'events': events})
+
 def user_detail(request):
     return render(request, 'user/detail.html')
 
@@ -79,3 +95,4 @@ def add_photo(request, user_id):
 def going_event(request, event_id, user_id):
     Event.objects.get(id=event_id).user.add(user_id)
     return redirect('/user') 
+
