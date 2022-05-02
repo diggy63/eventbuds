@@ -1,40 +1,35 @@
-{% extends 'base.html' %}
-
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="wrapper">
-<div class="card">
-  <div class="card-content">
-{% for photo in user.user_avatar_set.all %}
-<img class="responsive-img smallImg" src="{{photo.url}}">
-{% empty %}
-<h1>there is not a photo</h1>
-{% endfor %}
-<div class="userTitle">{{ user }}</div>
-</div>
-</div>
+  <div class="card">
+    <div class="card-content">
+      {% for photo in user.user_avatar_set.all %}
+      <img class="responsive-img smallImg" src="{{photo.url}}"/>
+      {% empty %}
+      <h1>there is not a photo</h1>
+      {% endfor %}
+      <div class="userTitle">{{ user }}</div>
+    </div>
+  </div>
 </div>
 <div class="card">
   <div class="card-content">
     {% for event in user.event.all %}
-      <h1>{{ event }}</h1>
-      {% empty %}
-<h1>there are no events</h1>
-
-<<<<<<< HEAD
-<h1>{{ user }}</h1>
-
-
-=======
-      {% endfor %}
-    </div>
-    </div>
->>>>>>> main
-<form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-    {% csrf_token %}
-    <input type="file" name="photo-file">
-    <br><br>
-    <input type="submit" class="btn" value="Upload Photo">
-  </form>
+    <h1>{{ event }}</h1>
+    {% empty %}
+    <h1>there are no events</h1>
+    {% endfor %}
+  </div>
+</div>
+<form
+  action="{% url 'add_photo' user.id %}"
+  enctype="multipart/form-data"
+  method="POST"
+  class="card-panel"
+>
+  {% csrf_token %}
+  <input type="file" name="photo-file" />
+  <br /><br />
+  <input type="submit" class="btn" value="Upload Photo" />
+</form>
 
 {% endblock content %}
