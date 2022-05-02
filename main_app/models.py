@@ -31,6 +31,7 @@ class User_Avatar(models.Model):
     url = models.CharField(max_length=200)
     events = models.ManyToManyField(Event, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=200)
 
     def __str__(self):
         return f"Avatar for user_id: {self.user_id} @{self.url}."
