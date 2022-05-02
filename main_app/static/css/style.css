@@ -12,3 +12,15 @@ body {
     padding-top: 0;
     text-align: right;
   }
+
+  .smallImg{
+    max-height: 10vh;
+    border-radius: 100%;
+  }
+  
+  .wrapper{
+  }
+  .userTitle{
+    display: inline-block;
+    font-size: 40px;
+  }

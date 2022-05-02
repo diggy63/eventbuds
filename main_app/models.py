@@ -15,7 +15,7 @@ class Event(models.Model):
     user = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
-        return self.event_name
+        return f'{self.user}'
 
     def get_absolute_url(self):
         return reverse('home')
@@ -27,3 +27,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+class User_Avatar(models.Model):
+    url = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Avatar for user_id: {self.user_id} @{self.url}."
