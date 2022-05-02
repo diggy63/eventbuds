@@ -62,8 +62,6 @@ def delete_comment(request, event_id, comment_id):
 def search(request):
     query = request.GET.get('q')
     key = os.getenv('ACCESS_TOKEN')
-    print(key)
-    print(query)
     r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?keyword={query}&apikey={key}')
     r_json = r.json()
     embed = r_json.get('_embedded', {})
