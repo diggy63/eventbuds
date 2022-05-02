@@ -15,6 +15,7 @@
         {% for venue in event.venues %} {{venue.name}} {% empty %}
         <p>No venues</p>
         {% endfor %}
+        <a href="{% url 'event_detail' event.id %}">Details</a>
       </span>
     </li>
     {% empty %}
