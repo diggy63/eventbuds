@@ -38,6 +38,7 @@ def events_index(request):
 def event_detail(request, event_id):
     event = Event.objects.get(id=event_id)
     return render(request, 'events/detail.html', {'event': event})
+    
 class EventCreate(CreateView):
     model = Event
     fields = '__all__'
@@ -53,17 +54,14 @@ def delete_comment(request, event_id, comment_id):
     return redirect('event_detail', event_id=event_id)
 
 def search(request):
-    load_dotenv()
     query = request.GET.get('q')
     key = os.getenv('ACCESS_TOKEN')
-    r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?keyword={query}&apikey={key}')
-    r_json = r.json()
-    embed = r_json.get('_embedded', {})
+    r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?keyword={query}&apikey={key}').json()
+    embed = r.get('_embedded', {})
     events = embed.get('events', [])
-    for idx, event in enumerate(events):
+    for idx, event in enumerate(events): # transforms the json so that venues is accessible with . notation
         embed = event.get('_embedded')
         venues = embed.get('venues')
         events[idx]['venues'] = venues
-    print(events)
     return render(request, 'events/search.html', {'events': events})
     
