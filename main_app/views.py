@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from dotenv import load_dotenv
 from .models import Event, Comment
-
+import requests, os
 
 # Create your views here.
 def home(request):
@@ -51,7 +52,10 @@ def delete_comment(request, event_id, comment_id):
     return redirect('event_detail', event_id=event_id)
 
 def search(request):
+    load_dotenv()
     query = request.GET.get('q')
-    print(query)
-    return render(request, 'events/search.html')
+    key = os.getenv('ACCESS_TOKEN')
+    r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?keyword={query}&apikey={key}')
+    print(r.json())
+    return render(request, 'events/search.html', {'results': r})
     
