@@ -11,7 +11,6 @@ class Event(models.Model):
     image = models.TextField(max_length=250)
     description = models.TextField(max_length=200)
     date = models.DateField()
-    url_ticketmaster = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return f'{self.event_name}'
@@ -41,3 +40,6 @@ class User_Event(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.event}'
+
+class TicketMasterEvent(Event):
+        url_ticketmaster = models.CharField(max_length=100, unique=True)
