@@ -10,12 +10,17 @@
     {% for event in events %}
 
     <li>
-      {{event.name}} -
+      {{event.name}}
       <span>
-        {% for venue in event.venues %} {{venue.name}} {% empty %}
-        <p>No venues</p>
+        {% for venue in event.venues %} - {{venue.name}} {% empty %}
+        <p>No venue found...</p>
         {% endfor %}
+        <form method="POST" action="{% url 'ticketmaster_create' event.id %}">
+            {% csrf_token %}
+            <input type="submit" value="submit">
+        </form>
       </span>
+
     </li>
     {% empty %}
     <li>No results...</li>
