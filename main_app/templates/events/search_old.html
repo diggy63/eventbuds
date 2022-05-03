@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content %}
+<div>
+  <h1>Search for events</h1>
+  <form method="GET" action="{% url 'search' %}">
+    {% csrf_token %}
+    <input type="search" name="q" placeholder="Search..." autocomplete="off" />
+    <input type="submit" name="Search" value="Search"/>
+  </form>
+  <ul>
+    {% for event in events %}
+
+    <li>
+      {{event.name}}
+      <span>
+        {% for venue in event.venues %} - {{venue.name}} {% empty %}
+        <p>No venue found...</p>
+        {% endfor %}
+        <form method="POST" action="{% url 'ticketmaster_create' event.id %}">
+            {% csrf_token %}
+            <input type="submit" value="Create Event">
+        </form>
+      </span>
+
+    </li>
+    {% empty %}
+    <li>No results...</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock content %}
