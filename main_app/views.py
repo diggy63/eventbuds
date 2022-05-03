@@ -114,3 +114,11 @@ def add_bio(request, user_id):
     user.bio = request.GET.get('bio')
     user.save()
     return redirect('/user')
+
+def not_going(request, user_id, event_id):
+    user = User_Avatar.objects.get(user_id=user_id)
+    event = Event.objects.get(id=event_id)
+    delete_connect = User_Event.objects.get(user=user, event=event)
+    delete_connect.delete()
+    return redirect('/user')
+

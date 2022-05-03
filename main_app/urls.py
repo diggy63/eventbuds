@@ -15,4 +15,5 @@ urlpatterns = [
     path('events/<int:event_id>/<int:user_id>', views.going_event, name='going_event'),
     path('user/create', views.create_user, name='create_user'),
     path('user/add_bio/<int:user_id>', views.add_bio, name='add_bio'),
+    path('user/<int:user_id>/not_going/<int:event_id>', views.not_going, name='not_going'),
 ]

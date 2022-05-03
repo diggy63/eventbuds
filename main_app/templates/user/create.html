@@ -15,9 +15,6 @@
     </div>
 <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
     {% csrf_token %}
-    <label>Write your bio</label>
-    <input type="textarea" name="bio">
-    <br>
     <input type="file" name="photo-file">
     <br><br>
     <input type="submit" class="btn" value="Upload Photo">
