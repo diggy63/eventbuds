@@ -13,8 +13,8 @@ from .models import Event, Comment, User_Avatar, User_Event
 import uuid
 import boto3
 
-S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
-BUCKET = 'catcollector-wawa'
+S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
+BUCKET = 'catcollectorbucketdk'
 
 # Create your views here.
 def home(request):
@@ -96,9 +96,9 @@ def add_photo(request, user_id):
       User_Avatar.objects.create(url=url, user_id=user_id, bio= user_bio)
       user = User_Avatar.objects.get(user_id= user_id)
       user.save()
-      print(user.__dict__)
+      print("photo was sucessful")
     except:
-      User_Avatar.objects.create(user_id=user_id)
+      User_Avatar.objects.create(user_id=user_id, bio = user_bio)
       print('An error occurred uploading to S3.')
   return redirect('/user')  
 
