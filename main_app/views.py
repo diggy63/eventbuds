@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from psycopg2 import Date
 from .models import Event, Comment
 import requests, os
-from .models import Event, Comment, User_Avatar, User_Event
+from .models import Event, Comment, User_Avatar, User_Event, TicketMasterEvent
 import uuid
 import boto3
 
@@ -44,9 +44,16 @@ def events_index(request):
     events = Event.objects.all()
     return render(request, 'events/index.html', {'events': events})
 
-def event_detail(request, event_id):
+def event_detail(request, event_id , user_id):
+    show_going = True
     event = Event.objects.get(id=event_id)
-    return render(request, 'events/detail.html', {'event':event})
+    user = User_Avatar.objects.get(user_id = user_id)
+    try:
+        user_event = User_Event.objects.get(user = user, event_id = event_id)
+        show_going = False
+    except:
+        show_going = True
+    return render(request, 'events/detail.html', {'event':event , 'show_going': show_going} )
 
 class EventCreate(CreateView):
     model = Event
@@ -137,7 +144,9 @@ def add_photo(request, user_id):
 def going_event(request, event_id, user_id):
     user = User_Avatar.objects.get(user_id=user_id)
     event = Event.objects.get(id=event_id)
+    print('here')
     try:
+        print('here')
         event_user = User_Event.objects.get(user=user, event=event)
     except:
         user_event = User_Event.objects.create(user=user, event=event)
@@ -168,7 +177,7 @@ def going_event(request, event_id, user_id):
 #         else:
 #             return render(request, 'events/search.html', {'events': []})
 
-def ticketmaster_create(request, event_id):
+def ticketmaster_create(request, event_id, user_id):
     load_dotenv()
     key = os.getenv('ACCESS_TOKEN')
     r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?id={event_id}&apikey={key}')
@@ -190,17 +199,22 @@ def ticketmaster_create(request, event_id):
             artist = artist[0]['name']
         else:
             artist = 'None'
+        images = the_event.get('images', [])
+        if images:
+            image = images[0]
+        else:
+            image = 'None'
         date = the_event['dates']['start']['localDate']
-        event = Event.objects.get_or_create(url_ticketmaster = event_id, defaults={
+        event = TicketMasterEvent.objects.get_or_create(url_ticketmaster = event_id, defaults={
                     'event_name':event_name,
                     'event_type':event_type,
                     'location': location,
                     'artist':artist,
-                    'image':'None',
+                    'image':image,
                     'description':'None',
                     'date':date})
         
-        return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}')
+        return redirect(f'/events/{TicketMasterEvent.objects.get(url_ticketmaster=event_id).id}/{user_id}')
     else:
         return redirect(f'/events/search')  
 

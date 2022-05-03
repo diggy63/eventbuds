@@ -14,6 +14,7 @@
       <div class="card-content">
         <div class="labelClass"> Bio:</div>
         {{viewUser.bio}}
+        <br>
     </div>
     </div>
 <div class="card center">
@@ -30,8 +31,13 @@
     <br>
     {{item.event.date}}
     <br>
-    <a href="{% url 'event_detail' item.event.id %}"><button class="btn">Details</button></a>
+    <a href="{% url 'event_detail' item.event.id user.id %}"><button class="btn">Details</button></a>
+    
+    
+    {% if user.id == viewUser.user.id %}
     <a href="{% url 'not_going' user.id item.event.id%}"><button class="btn">Not Going</button></a>
+    {% endif %}
+      
 
     </div>
   </div>
