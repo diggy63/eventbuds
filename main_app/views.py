@@ -158,14 +158,23 @@ def ticketmaster_create(request, event_id):
     embed = r_json.get('_embedded', {})
     events = embed.get('events', [])
     the_event = events[0]
+    event_name = the_event['name']
+    event_type = the_event['classifications'][0]['segment']['name']
+    location = the_event['_embedded']['venues'][0]['name']
+    artist = the_event['_embedded'].get('attractions', [])
+    if artist:
+        artist = artist[0]['name']
+    else:
+        artist = 'None'
+    date = the_event['dates']['start']['localDate']
     event = Event.objects.get_or_create(url_ticketmaster = event_id, defaults={
-                'event_name':the_event['name'],
-                'event_type':the_event['type'],
-                'location': the_event['_embedded']['venues'][0]['name'],
-                'artist':'None',
+                'event_name':event_name,
+                'event_type':event_type,
+                'location': location,
+                'artist':artist,
                 'image':'None',
                 'description':'None',
-                'date':'2022-05-03'})
+                'date':date})
     
     return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}')    
 

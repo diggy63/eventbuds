@@ -1,30 +1,42 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% block content %} {% if events %}
 <div>
   <h1>Search for events</h1>
   <form method="GET" action="{% url 'search' %}">
     {% csrf_token %}
     <input type="search" name="q" placeholder="Search..." autocomplete="off" />
-    <input type="submit" name="Search" value="Search"/>
+    <input class="hide-on-med-and-down" type="submit" name="Search" value="Search" />
   </form>
-  <ul>
-    {% for event in events %}
-
-    <li>
-      {{event.name}}
-      <span>
-        {% for venue in event.venues %} - {{venue.name}} {% empty %}
-        <p>No venue found...</p>
-        {% endfor %}
-        <form method="POST" action="{% url 'ticketmaster_create' event.id %}">
-            {% csrf_token %}
-            <input type="submit" value="Create Event">
-        </form>
-      </span>
-
-    </li>
-    {% empty %}
-    <li>No results...</li>
-    {% endfor %}
-  </ul>
 </div>
-{% endblock content %}
+<table class="striped responsive-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Venue</th>
+      <th>Type</th>
+      <th>Date</th>
+      <th>Create</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for event in events %}
+    <tr>
+      <td>{{event.name}}</td>
+      <td>
+        {% for venue in event.venues %} {{venue.name}} {% empty %} No venues 
+        {%endfor %}
+      </td>
+      <td>{% for item in event.classifications %} {{item.segment.name}} {% endfor %}</td>
+      <td>{{event.dates.start.localDate}}</td>
+      <th>
+        <form method="POST" action="{% url 'ticketmaster_create' event.id %}">
+          {% csrf_token %}
+          <input type="submit" value="Create event" />
+        </form>
+      </th>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No venue found...</p>
+{% endif %} {% endblock content %}
