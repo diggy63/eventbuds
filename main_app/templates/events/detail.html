@@ -39,13 +39,11 @@
 <ul>
   <li>{{comment.user}}</li>
   <li>{{comment.content}}</li>
-  <li><a href="{% url 'update_comment' event.id comment.id %}"><button>update</button></a></li>
+  <li><a href="{% url 'update_comment' event.id comment.id %}"><button>Update</button></a></li>
+  <li><a href="{% url 'delete_comment' event.id comment.id %}"><button>Delete</button></a></li>
 </ul>
-<a href="{% url 'delete_comment' event.id comment.id %}">X</a>
 {% empty %}
 <p>No comments yet</p>
 {% endfor %} 
-
-  
 
 {% endblock content %}
