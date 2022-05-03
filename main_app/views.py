@@ -100,9 +100,12 @@ def add_photo(request, user_id):
 def going_event(request, event_id, user_id):
     user = User_Avatar.objects.get(user_id=user_id)
     event = Event.objects.get(id=event_id)
-    user_event = User_Event.objects.create(user=user, event=event)
-    user_event.save()
-    print(user_event)
+    try:
+        event_user = User_Event.objects.get(user=user, event=event)
+    except:
+        user_event = User_Event.objects.create(user=user, event=event)
+        user_event.save()
+        print(user_event)
     # Event.objects.get(id=event_id).user_avatar.add(user_id)
     return redirect('/user')
 

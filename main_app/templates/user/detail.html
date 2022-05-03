@@ -1,9 +1,16 @@
 {% extends 'base.html' %} {% block content %}
 <div class="wrapper">
   <div class="card">
-    <div class="card-content">
-      {% for photo in user.user_avatar_set.all %}
-      <img class="responsive-img smallImg" src="{{photo.url}}"/>
+      {% for event in item.events.all%}
+      <div class="card-content">
+      <a href="{% url 'event_detail' event.id %}"><h4>{{event.event_name}}</h4></a>
+      <br>
+      {{event.location}}
+      <br>
+      {{event.date}}
+      <br>
+      <a href="{% url 'delete_going' user.id event.id%}"><button>Not Going</button></a>
+      </div>
       {% empty %}
       <h1>there is not a photo</h1>
       {% endfor %}
