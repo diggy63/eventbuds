@@ -31,7 +31,7 @@
     <br>
     {{item.event.date}}
     <br>
-    <a href="{% url 'event_detail' item.event.id %}"><button class="btn">Details</button></a>
+    <a href="{% url 'event_detail' item.event.id user.id %}"><button class="btn">Details</button></a>
     
     
     {% if user.id == viewUser.user.id %}

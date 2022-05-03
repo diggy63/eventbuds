@@ -23,9 +23,14 @@
       <td>{{event.event_type}}</td>
       <td>{{event.date}}</td>
       <th>
+<<<<<<< HEAD
         <a href="{% url 'event_detail' event.id %} "><button class="btn">Details</button></a>
         <a href="{% url 'event_delete' event.id %} "><button class="btn">Delete</button></a>
     </th>
+=======
+        <a href="{% url 'event_detail' event.id user.id%} "><button class="btn">Details</button></a>
+      </th>
+>>>>>>> main
     </tr>
     {% endfor %}
   </tbody>
