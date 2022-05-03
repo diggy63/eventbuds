@@ -98,6 +98,7 @@ def add_photo(request, user_id):
       user.save()
       print(user.__dict__)
     except:
+      User_Avatar.objects.create(user_id=user_id)
       print('An error occurred uploading to S3.')
   return redirect('/user')  
 
