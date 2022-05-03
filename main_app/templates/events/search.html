@@ -4,7 +4,7 @@
   <form method="GET" action="{% url 'search' %}">
     {% csrf_token %}
     <input type="search" name="q" placeholder="Search..." autocomplete="off" />
-    <input type="submit" name="submit" />
+    <input type="submit" name="Search" value="Search"/>
   </form>
   <ul>
     {% for event in events %}
@@ -17,7 +17,7 @@
         {% endfor %}
         <form method="POST" action="{% url 'ticketmaster_create' event.id %}">
             {% csrf_token %}
-            <input type="submit" value="submit">
+            <input type="submit" value="Create Event">
         </form>
       </span>
 
