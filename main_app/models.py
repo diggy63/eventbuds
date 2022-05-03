@@ -29,9 +29,15 @@ class Comment(models.Model):
 
 class User_Avatar(models.Model):
     url = models.CharField(max_length=200)
-    events = models.ManyToManyField(Event, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=200)
 
     def __str__(self):
         return f"Avatar for user_id: {self.user_id} {self.events}."
+
+class User_Event(models.Model):
+    user = models.ForeignKey(User_Avatar, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user} {self.event}'
