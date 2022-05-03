@@ -1,12 +1,16 @@
 {% extends 'base.html' %} {% block content %}
 
 <h1>Event {{ event.event_name }}</h1>
+<<<<<<< HEAD
 
 
 
   
 <div class="row">
   <div class="col s6">
+=======
+<a href="{% url 'update_event' event.id %}"><button>Update Event</button></a>
+>>>>>>> main
 <ul>
   <li>{{ event.event_type }}</li>
   <li>{{ event.location }}</li>

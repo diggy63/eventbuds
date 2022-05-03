@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %} {% if events %}
+{% extends 'base.html' %} {% block content %} 
 <div>
   <h1>Search for events</h1>
   <form method="GET" action="{% url 'search' %}">
@@ -7,6 +7,7 @@
     <input class="hide-on-med-and-down" type="submit" name="Search" value="Search" />
   </form>
 </div>
+{% if events %}
 <table class="striped responsive-table">
   <thead>
     <tr>
