@@ -33,7 +33,7 @@ class User_Avatar(models.Model):
     bio = models.TextField(max_length=200)
 
     def __str__(self):
-        return f"Avatar for user_id: {self.user_id} {self.events}."
+        return f"Avatar for user_id: {self.user_id}."
 
 class User_Event(models.Model):
     user = models.ForeignKey(User_Avatar, on_delete=models.CASCADE)
