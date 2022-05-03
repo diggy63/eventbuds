@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('accounts/signup/', views.signup, name='signup'),
-    path('events/create/', views.EventCreate.as_view(), name='events_create'),
+    # path('events/create/', views.EventCreate.as_view(), name='events_create'),
     path('events/', views.events_index, name='events'),
     path('events/<int:event_id>/<int:user_id>', views.event_detail, name='event_detail'),
     path('events/<str:event_id>/delete/<int:user_id>', views.ticketmaster_create, name='ticketmaster_create'),
@@ -20,6 +20,7 @@ urlpatterns = [
     path('events/<int:event_id>/update/<int:comment_id>', views.update_comment, name='update_comment'),
     path('events/<int:event_id>/update_content/<int:comment_id>', views.update_content, name='update_content'),
     path('events/<int:event_id>/update_event', views.update_event, name='update_event'),
-    path('events/<int:event_id>/update_details', views.update_details, name='update_details'),
-    path('events/<int:pk>/delete/', views.EventDelete.as_view(), name='event_delete'),
+    path('events/<int:event_id>/update_details/<int:user_id>', views.update_details, name='update_details'),
+    path('events/create/', views.create_event, name='events_create'),
+    path('events/new_events', views.new_event, name='new_event'),
 ]
