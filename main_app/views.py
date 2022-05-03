@@ -13,13 +13,8 @@ from .models import Event, Comment, User_Avatar, User_Event
 import uuid
 import boto3
 
-<<<<<<< HEAD
 S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
-BUCKET = 'catcollectorbucket01'
-=======
-S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
-BUCKET = 'catcollector-wawa'
->>>>>>> main
+BUCKET = 'eventbuds'
 
 # Create your views here.
 def home(request):
