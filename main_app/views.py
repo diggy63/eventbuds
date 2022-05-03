@@ -1,3 +1,4 @@
+from email.mime import image
 from operator import indexOf
 from queue import Empty
 from django.shortcuts import render, redirect
@@ -54,6 +55,20 @@ class EventCreate(CreateView):
 def create_event(request):
     return render(request, 'events/create.html')
     
+def new_event(request):
+    print(request.POST.get('event_name'))
+    event = Event.objects.create(
+        event_name=request.POST.get('event_name'),
+        event_type=request.POST.get('event_type'),
+        location=request.POST.get('location'),
+        artist=request.POST.get('artist'),
+        image=request.POST.get('image'),
+        description=request.POST.get('description'),
+        date=request.POST.get('date')
+        )
+    event.save()
+    print(event.__dict__)
+    return redirect('/events/')
 
 def create_comment(request, event_id):
     event = Event.objects.get(id=event_id)
