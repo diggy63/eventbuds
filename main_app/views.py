@@ -51,6 +51,10 @@ class EventCreate(CreateView):
     model = Event
     fields = '__all__'
 
+class EventDelete(DeleteView):
+    model = Event
+    success_url = '/events/'
+
 def create_comment(request, event_id):
     event = Event.objects.get(id=event_id)
     comment = Comment.objects.create(user=request.user, event=event, content=request.POST.get('content', ''))
