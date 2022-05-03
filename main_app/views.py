@@ -13,8 +13,8 @@ from .models import Event, Comment, User_Avatar, User_Event
 import uuid
 import boto3
 
-S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
-BUCKET = 'catcollectorbucket002'
+S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
+BUCKET = 'catcollector-wawa'
 
 # Create your views here.
 def home(request):
@@ -153,7 +153,7 @@ def ticketmaster_create(request, event_id):
                 'description':'None',
                 'date':'2022-05-03'})
     
-    return render(request, 'events/detail.html', {'event': event})    
+    return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}')    
 
 def create_user(request):
     return render(request, 'user/create.html')
