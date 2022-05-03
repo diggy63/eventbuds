@@ -1,45 +1,50 @@
 {% extends 'base.html' %} {% block content %}
 <div class="wrapper">
   <div class="card">
-      {% for event in item.events.all%}
-      <div class="card-content">
-      <a href="{% url 'event_detail' event.id %}"><h4>{{event.event_name}}</h4></a>
-      <br>
-      {{event.location}}
-      <br>
-      {{event.date}}
-      <br>
-      <a href="{% url 'delete_going' user.id event.id%}"><button>Not Going</button></a>
-      </div>
-      {% empty %}
-      <h1>there is not a photo</h1>
+    <div class="card-content">
+      
+      {% for item in user.user_avatar_set.all %}
+      <img class="esponsive-img smallImg" src="{{item.url}}">
+        
       {% endfor %}
       <div class="userTitle">{{ user }}</div>
     </div>
-  </div>
-</div>
-<div class="card">
-  <div class="card-content">
-      
-      {% for item in user.user_avatar_set.all  %}
-      {% for user_event in item.user_event_set.all %}
-      <div class="card">
-        <div class="card-content">
-      {{user_event.event.event_name}}
-      <br>
-        {{user_event.event.event_type}}
-        <br>
-        {{user_event.event.date}}
-      </div>
-      <a href="{% url 'not_going' user.id user_event.event.id%}"><button>Not Going</button></a>
     </div>
-      {% endfor %}
-      {% endfor %}
-    <form action="{% url 'add_bio' user.id%}" method="POST">
+    <div class="card">
+      <div class="card-content">
+        <div class="labelClass"> Bio:</div>
+        {{user.user_avatar_set.first.bio}}
+    </div>
+    </div>
+<div class="card center">
+  <div class="card-content">
+    <h2>Events</h2>
+    <div class="row">
+    {% for item in user.user_avatar_set.first.user_event_set.all  %}
+    <div class="col s6">
+    <div class="card">
+        <div class="card-content">
+    {{item.event}}
+    <br>
+    {{item.event.event_type}}
+    <br>
+    {{item.event.date}}
+    <br>
+    <a href="{% url 'event_detail' item.event.id %}"><button class="btn">Details</button></a>
+    <a href="{% url 'not_going' user.id item.event.id%}"><button class="btn">Not Going</button></a>
+
+    </div>
+  </div>
+  </div>
+    {% endfor %} 
+  </div>
+  </div>
+  </div>
+    <!-- <form action="{% url 'add_bio' user.id%}" method="POST">
       {% csrf_token %}
       <input type="textarea" name="bio">
       <input type="submit" class="btn" value="upload bio">
-    </form>
+    </form> -->
 <!-- <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
     {% csrf_token %}
     <input type="file" name="photo-file">

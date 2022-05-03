@@ -24,3 +24,18 @@ body {
     display: inline-block;
     font-size: 40px;
   }
+
+  .labelClass {
+    display: inline;
+    font-size: 30px;
+  }
+
+  .btn {
+    background-color: #0077b6;
+    border-radius: 10px;
+  }
+
+  .btn:hover {
+    background-color: #48cae4;
+    border-radius: 10px;
+  }
