@@ -154,13 +154,16 @@ def ticketmaster_create(request, event_id):
     key = os.getenv('ACCESS_TOKEN')
     r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?id={event_id}&apikey={key}')
     r_json = r.json()
-    print(r_json)
     embed = r_json.get('_embedded', {})
     events = embed.get('events', [])
     the_event = events[0]
     event_name = the_event['name']
-    event_type = the_event['classifications'][0]['segment']['name']
-    location = the_event['_embedded']['venues'][0]['name']
+    event_type = the_event.get('classifications', [])
+    if event_type:
+        event_type = event_type[0]['segment']['name']
+    else:
+        event_type = 'None'
+    location = the_event['_embedded']['venues'][0].get('name', 'None')
     artist = the_event['_embedded'].get('attractions', [])
     if artist:
         artist = artist[0]['name']
