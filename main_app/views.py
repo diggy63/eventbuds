@@ -82,10 +82,9 @@ def search(request):
     r_json = r.json()
     embed = r_json.get('_embedded', {})
     events = embed.get('events', [])
-    print(events)
     for idx, event in enumerate(events): # transforms the json so that venues is accessible with . notation
-        embed = event.get('_embedded')
-        venues = embed.get('venues')
+        embed = event.get('_embedded', {})
+        venues = embed.get('venues', [])
         events[idx]['venues'] = venues
     return render(request, 'events/search.html', {'events': events})
 
@@ -157,29 +156,33 @@ def ticketmaster_create(request, event_id):
     embed = r_json.get('_embedded', {})
     events = embed.get('events', [])
     the_event = events[0]
-    event_name = the_event['name']
-    event_type = the_event.get('classifications', [])
-    if event_type:
-        event_type = event_type[0]['segment']['name']
+    second_embed = the_event.get('_embedded', {})
+    if second_embed:
+        event_name = the_event['name']
+        event_type = the_event.get('classifications', [])
+        if event_type:
+            event_type = event_type[0]['segment']['name']
+        else:
+            event_type = 'None'
+        location = the_event['_embedded']['venues'][0].get('name', 'None')
+        artist = the_event['_embedded'].get('attractions', [])
+        if artist:
+            artist = artist[0]['name']
+        else:
+            artist = 'None'
+        date = the_event['dates']['start']['localDate']
+        event = Event.objects.get_or_create(url_ticketmaster = event_id, defaults={
+                    'event_name':event_name,
+                    'event_type':event_type,
+                    'location': location,
+                    'artist':artist,
+                    'image':'None',
+                    'description':'None',
+                    'date':date})
+        
+        return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}')
     else:
-        event_type = 'None'
-    location = the_event['_embedded']['venues'][0].get('name', 'None')
-    artist = the_event['_embedded'].get('attractions', [])
-    if artist:
-        artist = artist[0]['name']
-    else:
-        artist = 'None'
-    date = the_event['dates']['start']['localDate']
-    event = Event.objects.get_or_create(url_ticketmaster = event_id, defaults={
-                'event_name':event_name,
-                'event_type':event_type,
-                'location': location,
-                'artist':artist,
-                'image':'None',
-                'description':'None',
-                'date':date})
-    
-    return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}')    
+        return redirect(f'/events/search')  
 
 def create_user(request):
     return render(request, 'user/create.html')
