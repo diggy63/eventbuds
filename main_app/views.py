@@ -1,4 +1,5 @@
 from operator import indexOf
+from queue import Empty
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login
@@ -43,7 +44,7 @@ def events_index(request):
 
 def event_detail(request, event_id):
     event = Event.objects.get(id=event_id)
-    return render(request, 'events/detail.html', {'event': event})
+    return render(request, 'events/detail.html', {'event':event})
 
 class EventCreate(CreateView):
     model = Event
@@ -60,12 +61,14 @@ def delete_comment(request, event_id, comment_id):
     return redirect('event_detail', event_id=event_id)
 
 def search(request):
+    load_dotenv()
     query = request.GET.get('q')
     key = os.getenv('ACCESS_TOKEN')
     r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?keyword={query}&apikey={key}')
     r_json = r.json()
     embed = r_json.get('_embedded', {})
     events = embed.get('events', [])
+    print(events)
     for idx, event in enumerate(events): # transforms the json so that venues is accessible with . notation
         embed = event.get('_embedded')
         venues = embed.get('venues')
@@ -97,3 +100,24 @@ def going_event(request, event_id, user_id):
     Event.objects.get(id=event_id).user.add(user_id)
     return redirect('/user') 
 
+def ticketmaster_event(request, ticketmaster_id):
+    load_dotenv()
+    key = os.getenv('ACCESS_TOKEN')
+    r=requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?id={ticketmaster_id}&apikey={key}')
+    if r.status_code != 404:
+        r_json = r.json()
+        embed = r_json.get('_embedded', {})
+        events = embed.get('events', [])
+        if events:
+            the_event = events[0]
+            event = Event.objects.get_or_create(url_ticketmaster = ticketmaster_id, defaults={
+                'event_name':the_event['name'],
+                'event_type':the_event['type'],
+                'location': the_event['_embedded']['venues'][0]['name'],
+                'artist':'None',
+                'image':'None',
+                'description':'None',
+                'date':'None'})
+            return render(request, 'events/detail.html', {'event': event})
+        else:
+            return render(request, 'events/detail.html', {'event':None})
