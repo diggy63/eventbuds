@@ -1,3 +1,4 @@
+from email.mime import image
 from operator import indexOf
 from queue import Empty
 from django.shortcuts import render, redirect
@@ -44,7 +45,6 @@ def events_index(request):
     return render(request, 'events/index.html', {'events': events})
 
 def event_detail(request, event_id , user_id):
-
     show_going = True
     event = Event.objects.get(id=event_id)
     user = User_Avatar.objects.get(user_id = user_id)
@@ -55,9 +55,25 @@ def event_detail(request, event_id , user_id):
         show_going = True
     return render(request, 'events/detail.html', {'event':event , 'show_going': show_going} )
 
-class EventCreate(CreateView):
-    model = Event
-    fields = '__all__'
+# class EventCreate(CreateView):
+#     model = Event
+#     fields = '__all__'
+    
+def create_event(request):
+    return render(request, 'events/create.html')
+    
+def new_event(request):
+    event = Event.objects.create(
+        event_name=request.POST.get('event_name'),
+        event_type=request.POST.get('event_type'),
+        location=request.POST.get('location'),
+        artist=request.POST.get('artist'),
+        image=request.POST.get('image'),
+        description=request.POST.get('description'),
+        date=request.POST.get('date')
+        )
+    event.save()
+    return redirect('/events/')
 
 def create_comment(request, event_id, user_id):
     event = Event.objects.get(id=event_id)
@@ -126,9 +142,7 @@ def add_photo(request, user_id):
 def going_event(request, event_id, user_id):
     user = User_Avatar.objects.get(user_id=user_id)
     event = Event.objects.get(id=event_id)
-    print('here')
     try:
-        print('here')
         event_user = User_Event.objects.get(user=user, event=event)
     except:
         user_event = User_Event.objects.create(user=user, event=event)
@@ -159,7 +173,7 @@ def going_event(request, event_id, user_id):
 #         else:
 #             return render(request, 'events/search.html', {'events': []})
 
-def ticketmaster_create(request, event_id, user_id):
+def ticketmaster_create(request, event_id):
     load_dotenv()
     key = os.getenv('ACCESS_TOKEN')
     r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?id={event_id}&apikey={key}')
@@ -190,7 +204,6 @@ def ticketmaster_create(request, event_id, user_id):
                     'image':'None',
                     'description':'None',
                     'date':date})
-        
         return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}/{user_id}')
     else:
         return redirect(f'/events/search')  
