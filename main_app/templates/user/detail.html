@@ -3,24 +3,24 @@
   <div class="card">
     <div class="card-content">
       
-      {% for item in user.user_avatar_set.all %}
+      {% for item in viewUser.user_avatar_set.all %}
       <img class="esponsive-img smallImg" src="{{item.url}}">
         
       {% endfor %}
-      <div class="userTitle">{{ user }}</div>
+      <div class="userTitle">{{ viewUser.user }}</div>
     </div>
     </div>
     <div class="card">
       <div class="card-content">
         <div class="labelClass"> Bio:</div>
-        {{user.user_avatar_set.first.bio}}
+        {{viewUser.bio}}
     </div>
     </div>
 <div class="card center">
   <div class="card-content">
     <h2>Events</h2>
     <div class="row">
-    {% for item in user.user_avatar_set.first.user_event_set.all  %}
+    {% for item in viewUser.user_event_set.all  %}
     <div class="col s6">
     <div class="card">
         <div class="card-content">

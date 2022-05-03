@@ -89,8 +89,9 @@ def search(request):
         events[idx]['venues'] = venues
     return render(request, 'events/search.html', {'events': events})
 
-def user_detail(request):
-    return render(request, 'user/detail.html')
+def user_detail(request, user_id):
+    viewUser = User_Avatar.objects.get(user_id=user_id)
+    return render(request, 'user/detail.html', {'viewUser': viewUser})
 
 def add_photo(request, user_id):
   # photo-file will be the "name" attribute on the <input type="file">
@@ -113,7 +114,7 @@ def add_photo(request, user_id):
     except:
       User_Avatar.objects.create(user_id=user_id, bio = user_bio)
       print('An error occurred uploading to S3.')
-  return redirect('/user')  
+  return redirect(f'/user/{user_id}')
 
 def going_event(request, event_id, user_id):
     user = User_Avatar.objects.get(user_id=user_id)
@@ -125,8 +126,8 @@ def going_event(request, event_id, user_id):
         user_event.save()
         print(user_event)
     # Event.objects.get(id=event_id).user_avatar.add(user_id)
-    return redirect('/user')
-
+    # return redirect('/user')
+    return redirect(f'/user/{user_id}')
 # def ticketmaster_event(request, ticketmaster_id):
 #     load_dotenv()
 #     key = os.getenv('ACCESS_TOKEN')
@@ -192,5 +193,5 @@ def not_going(request, user_id, event_id):
     event = Event.objects.get(id=event_id)
     delete_connect = User_Event.objects.get(user=user, event=event)
     delete_connect.delete()
-    return redirect('/user')
+    return redirect(f'/user/{user_id}')
 

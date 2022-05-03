@@ -2,6 +2,11 @@
 
 <h1>Event {{ event.event_name }}</h1>
 
+
+
+  
+<div class="row">
+  <div class="col s6">
 <ul>
   <li>{{ event.event_type }}</li>
   <li>{{ event.location }}</li>
@@ -18,7 +23,17 @@
   <input type="textarea" name="content" />
   <input type="submit" name="submit" />
 </form>
-
+</div>
+<div class="col s6">
+<h4>Poeple going to the event</h4>
+<ul>
+  {% for user in event.user_event_set.all %}
+<br>
+  <li><a href="{% url 'user_detail' user.user.user.id %}" >{{user.user.user}}</a></li>
+{% endfor %}
+</ul>
+  </div>
+</div>
 {% for comment in event.comment_set.all %}
 <ul>
   <li>{{comment.user}}</li>
@@ -28,4 +43,8 @@
 <a href="{% url 'delete_comment' event.id comment.id %}">X</a>
 {% empty %}
 <p>No comments yet</p>
-{% endfor %} {% endblock content %}
+{% endfor %} 
+
+  
+
+{% endblock content %}
