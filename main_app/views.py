@@ -45,7 +45,6 @@ def events_index(request):
     return render(request, 'events/index.html', {'events': events})
 
 def event_detail(request, event_id , user_id):
-    
     show_going = True
     event = Event.objects.get(id=event_id)
     user = User_Avatar.objects.get(user_id = user_id)
@@ -205,8 +204,7 @@ def ticketmaster_create(request, event_id):
                     'image':'None',
                     'description':'None',
                     'date':date})
-        
-        return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}')
+        return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}/{user_id}')
     else:
         return redirect(f'/events/search')  
 
@@ -228,9 +226,9 @@ def not_going(request, user_id, event_id):
 
 def update_event(request, event_id):
     event = Event.objects.get(id=event_id)
-    return render(request, 'events/update.html', {'event': event, 'event_id': event_id}) 
+    return render(request, 'events/update.html', {'event': event}) 
 
-def update_details(request, event_id):
+def update_details(request, event_id, user_id):
     event = Event.objects.get(id=event_id)
     event.event_name = request.POST.get('event_name')
     event.event_type = request.POST.get('event_type')
@@ -240,4 +238,4 @@ def update_details(request, event_id):
     event.description = request.POST.get('description')
     event.date = request.POST.get('date')
     event.save()
-    return redirect('event_detail', event_id=event_id)
+    return redirect(f'/events/{event_id}/{user_id}')
