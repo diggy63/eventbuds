@@ -61,6 +61,19 @@ def delete_comment(request, event_id, comment_id):
     comment.delete()
     return redirect('event_detail', event_id=event_id)
 
+def update_comment(request, event_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    return render(request, 'comment/update.html', {'comment': comment, 'event_id': event_id}) 
+
+def update_content(request, event_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    content = request.POST.get('content')
+    comment.content = content
+    comment.save()
+    
+    return redirect('event_detail', event_id=event_id)
+    
+
 def search(request):
     load_dotenv()
     query = request.GET.get('q')

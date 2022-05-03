@@ -17,4 +17,6 @@ urlpatterns = [
     path('user/create', views.create_user, name='create_user'),
     path('user/add_bio/<int:user_id>', views.add_bio, name='add_bio'),
     path('user/<int:user_id>/not_going/<int:event_id>', views.not_going, name='not_going'),
+    path('events/<int:event_id>/update/<int:comment_id>', views.update_comment, name='update_comment'),
+    path('events/<int:event_id>/update_content/<int:comment_id>', views.update_content, name='update_content'),
 ]
