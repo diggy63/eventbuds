@@ -35,7 +35,7 @@
             <li><a href="{% url 'events' %}">Events</a></li>
             <li><a href="{% url 'search' %}">Search</a></li>
             <li><a href="{% url 'events_create' %}">Add An Event</a></li>
-            <li><a href="{% url 'user_detail' %}">{{ user }}</a></li>
+            <li><a href="{% url 'user_detail' user.id %}">{{ user }}</a></li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
             <li><a href="{% url 'signup' %}">Sign Up</a></li>
