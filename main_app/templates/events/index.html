@@ -5,19 +5,29 @@
 <h1>Events</h1>
 <a href="{% url 'search' %}"><button class="btn">Search</button></a>
 
-{% for event in events %}
-<h3>{{ event.event_name }}</h3>
-<ul>
-    <li>{{ event.event_type }}</li>
-    <li>{{ event.location }}</li>
-    <li>{{ event.artist }}</li>
-    <li>{{ event.image }}</li>
-    <li>{{ event.description}}</li>
-    <li>{{ event.date }}</li>
-    <li>{{ event.url_ticketmaster }}</li>
-</ul>
-<a href="{% url 'event_detail' event.id %}">Details</a>
-<a href="">Delete</a>
-{% endfor %}
-   
+<table class="striped responsive-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Venue</th>
+      <th>Type</th>
+      <th>Date</th>
+      <th><Details></Details></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for event in events %}
+    <tr>
+      <td><strong>{{event.event_name}}</strong></td>
+      <td>{{event.location}}</td>
+      <td>{{event.event_type}}</td>
+      <td>{{event.date}}</td>
+      <th>
+        <a href="{% url 'event_detail' event.id %} "><button class="btn">Details</button></a>
+      </th>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endblock content %}
