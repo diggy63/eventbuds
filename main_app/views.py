@@ -1,18 +1,20 @@
 from operator import indexOf
+from queue import Empty
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from dotenv import load_dotenv
+from psycopg2 import Date
 from .models import Event, Comment
 import requests, os
 from .models import Event, Comment, User_Avatar, User_Event
 import uuid
 import boto3
 
-S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
-BUCKET = 'catcollectorbucket002'
+S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
+BUCKET = 'catcollector-wawa'
 
 # Create your views here.
 def home(request):
@@ -43,7 +45,7 @@ def events_index(request):
 
 def event_detail(request, event_id):
     event = Event.objects.get(id=event_id)
-    return render(request, 'events/detail.html', {'event': event})
+    return render(request, 'events/detail.html', {'event':event})
 
 class EventCreate(CreateView):
     model = Event
@@ -60,12 +62,14 @@ def delete_comment(request, event_id, comment_id):
     return redirect('event_detail', event_id=event_id)
 
 def search(request):
+    load_dotenv()
     query = request.GET.get('q')
     key = os.getenv('ACCESS_TOKEN')
     r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?keyword={query}&apikey={key}')
     r_json = r.json()
     embed = r_json.get('_embedded', {})
     events = embed.get('events', [])
+    print(events)
     for idx, event in enumerate(events): # transforms the json so that venues is accessible with . notation
         embed = event.get('_embedded')
         venues = embed.get('venues')
@@ -108,6 +112,48 @@ def going_event(request, event_id, user_id):
         print(user_event)
     # Event.objects.get(id=event_id).user_avatar.add(user_id)
     return redirect('/user')
+
+# def ticketmaster_event(request, ticketmaster_id):
+#     load_dotenv()
+#     key = os.getenv('ACCESS_TOKEN')
+#     r=requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?id={ticketmaster_id}&apikey={key}')
+#     if r.status_code != 404:
+#         r_json = r.json()
+#         embed = r_json.get('_embedded', {})
+#         events = embed.get('events', [])
+#         if events:
+#             the_event = events[0]
+#             event = Event.objects.get_or_create(url_ticketmaster = ticketmaster_id, defaults={
+#                 'event_name':the_event['name'],
+#                 'event_type':the_event['type'],
+#                 'location': the_event['_embedded']['venues'][0]['name'],
+#                 'artist':'None',
+#                 'image':'None',
+#                 'description':'None',
+#                 'date':'2022-05-03'})
+#             return render(request, 'events/detail.html', {'event': event})
+#         else:
+#             return render(request, 'events/search.html', {'events': []})
+
+def ticketmaster_create(request, event_id):
+    load_dotenv()
+    key = os.getenv('ACCESS_TOKEN')
+    r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?id={event_id}&apikey={key}')
+    r_json = r.json()
+    print(r_json)
+    embed = r_json.get('_embedded', {})
+    events = embed.get('events', [])
+    the_event = events[0]
+    event = Event.objects.get_or_create(url_ticketmaster = event_id, defaults={
+                'event_name':the_event['name'],
+                'event_type':the_event['type'],
+                'location': the_event['_embedded']['venues'][0]['name'],
+                'artist':'None',
+                'image':'None',
+                'description':'None',
+                'date':'2022-05-03'})
+    
+    return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}')    
 
 def create_user(request):
     return render(request, 'user/create.html')
