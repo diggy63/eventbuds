@@ -171,13 +171,18 @@ def ticketmaster_create(request, event_id):
             artist = artist[0]['name']
         else:
             artist = 'None'
+        images = the_event.get('images', [])
+        if images:
+            image = images[0]
+        else:
+            image = 'None'
         date = the_event['dates']['start']['localDate']
         event = Event.objects.get_or_create(url_ticketmaster = event_id, defaults={
                     'event_name':event_name,
                     'event_type':event_type,
                     'location': location,
                     'artist':artist,
-                    'image':'None',
+                    'image':image,
                     'description':'None',
                     'date':date})
         

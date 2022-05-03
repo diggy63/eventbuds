@@ -31,7 +31,7 @@
       <th>
         <form method="POST" action="{% url 'ticketmaster_create' event.id %}">
           {% csrf_token %}
-          <input type="button" class="btn" value="Create event" />
+          <input type="submit" class="btn" value="Create event" />
         </form>
       </th>
     </tr>
