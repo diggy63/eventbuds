@@ -98,13 +98,8 @@ def add_photo(request, user_id):
   return redirect('/user')  
 
 def going_event(request, event_id, user_id):
-    event = Event.objects.get(id=event_id)
-    print(event.id)
-    User_Avatar.objects.get(user_id=user_id).events.add(event)
-    user = User_Avatar.objects.get(user_id=user_id)
-    user.events.add(event_id)
+    User_Avatar.objects.get(user_id=user_id).events.add(event_id)
     # Event.objects.get(id=event_id).user_avatar.add(user_id)
-    print(user.events.event_id)
     return redirect('/user') 
 
 def create_user(request):
