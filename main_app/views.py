@@ -110,3 +110,7 @@ def add_bio(request, user_id):
     user.bio = request.GET.get('bio')
     user.save()
     return redirect('/user')
+
+def delete_going(request, user_id, event_id):
+    User_Avatar.objects.get(user_id=user_id).events.remove(event_id)
+    return redirect('/user')

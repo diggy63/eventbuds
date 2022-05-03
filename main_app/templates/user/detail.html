@@ -18,6 +18,7 @@
       <br>
       {{event.date}}
       <br>
+      <a href="{% url 'delete_going' user.id event.id%}"><button>Not Going</button></a>
       </div>
       {% empty %}
       {% endfor %}
