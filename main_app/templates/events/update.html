@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<form action="{% url 'update_details' event_id %}" method="POST">
+    {% csrf_token %}
+    <input type="text" value="{{ event.event_name }}" name="event_name">
+    <input type="submit" class="btn" value="submit">
+
+</form>
+    
+{% endblock content %}

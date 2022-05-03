@@ -193,3 +193,19 @@ def not_going(request, user_id, event_id):
     delete_connect = User_Event.objects.get(user=user, event=event)
     delete_connect.delete()
     return redirect('/user')
+
+def update_event(request, event_id):
+    event = Event.objects.get(id=event_id)
+    return render(request, 'events/update.html', {'event': event, 'event_id': event_id}) 
+
+def update_details(request, event_id):
+    event = Event.objects.get(id=event_id)
+    event.event_name = request.POST.get('event_name')
+    event.event_type = request.POST.get('event_type')
+    event.location = request.POST.get('location')
+    event.artist = request.POST.get('artist')
+    event.image = request.POST.get('image')
+    event.description = request.POST.get('description')
+    event.date = request.POST.get('date')
+    event.save()
+    return redirect('event_detail', event_id=event_id)
