@@ -4,19 +4,23 @@
   <form method="GET" action="{% url 'search' %}">
     {% csrf_token %}
     <input type="search" name="q" placeholder="Search..." autocomplete="off" />
-    <input type="submit" name="submit" />
+    <input type="submit" name="Search" value="Search"/>
   </form>
   <ul>
     {% for event in events %}
 
     <li>
-      {{event.name}} -
+      {{event.name}}
       <span>
-        {% for venue in event.venues %} {{venue.name}} {% empty %}
-        <p>No venues</p>
+        {% for venue in event.venues %} - {{venue.name}} {% empty %}
+        <p>No venue found...</p>
         {% endfor %}
-        <a href="{% url 'event_detail' event.id %}">Details</a>
+        <form method="POST" action="{% url 'ticketmaster_create' event.id %}">
+            {% csrf_token %}
+            <input type="submit" value="Create Event">
+        </form>
       </span>
+
     </li>
     {% empty %}
     <li>No results...</li>
