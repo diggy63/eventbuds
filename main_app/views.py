@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from psycopg2 import Date
 from .models import Event, Comment
 import requests, os
-from .models import Event, Comment, User_Avatar, User_Event, TicketMasterEvent
+from .models import Event, Comment, User_Avatar, User_Event
 import uuid
 import boto3
 
@@ -44,6 +44,7 @@ def events_index(request):
     return render(request, 'events/index.html', {'events': events})
 
 def event_detail(request, event_id , user_id):
+
     show_going = True
     event = Event.objects.get(id=event_id)
     user = User_Avatar.objects.get(user_id = user_id)
@@ -180,22 +181,17 @@ def ticketmaster_create(request, event_id, user_id):
             artist = artist[0]['name']
         else:
             artist = 'None'
-        images = the_event.get('images', [])
-        if images:
-            image = images[0]
-        else:
-            image = 'None'
         date = the_event['dates']['start']['localDate']
-        event = TicketMasterEvent.objects.get_or_create(url_ticketmaster = event_id, defaults={
+        event = Event.objects.get_or_create(url_ticketmaster = event_id, defaults={
                     'event_name':event_name,
                     'event_type':event_type,
                     'location': location,
                     'artist':artist,
-                    'image':image,
+                    'image':'None',
                     'description':'None',
                     'date':date})
         
-        return redirect(f'/events/{TicketMasterEvent.objects.get(url_ticketmaster=event_id).id}/{user_id}')
+        return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}/{user_id}')
     else:
         return redirect(f'/events/search')  
 
@@ -217,9 +213,9 @@ def not_going(request, user_id, event_id):
 
 def update_event(request, event_id):
     event = Event.objects.get(id=event_id)
-    return render(request, 'events/update.html', {'event': event, 'event_id': event_id}) 
+    return render(request, 'events/update.html', {'event': event}) 
 
-def update_details(request, event_id):
+def update_details(request, event_id, user_id):
     event = Event.objects.get(id=event_id)
     event.event_name = request.POST.get('event_name')
     event.event_type = request.POST.get('event_type')
@@ -229,4 +225,4 @@ def update_details(request, event_id):
     event.description = request.POST.get('description')
     event.date = request.POST.get('date')
     event.save()
-    return redirect('event_detail', event_id=event_id)
+    return redirect(f'/events/{event_id}/{user_id}')
