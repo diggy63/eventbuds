@@ -13,8 +13,8 @@ from .models import Event, Comment, User_Avatar, User_Event
 import uuid
 import boto3
 
-S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
-BUCKET = 'catcollector-wawa'
+S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
+BUCKET = 'catcollector002'
 
 # Create your views here.
 def home(request):
@@ -60,6 +60,11 @@ def delete_comment(request, event_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
     return redirect('event_detail', event_id=event_id)
+
+def update_comment(request, event_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    return render(request, 'comment/update.html', {'comment': comment})
+
 
 def search(request):
     load_dotenv()
