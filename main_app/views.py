@@ -12,7 +12,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'catcollectorbucket01'
+BUCKET = 'catcollectorbucketdk'
 
 # Create your views here.
 def home(request):
@@ -98,8 +98,7 @@ def add_photo(request, user_id):
   return redirect('/user')  
 
 def going_event(request, event_id, user_id):
-    user = User_Avatar.objects.get(user_id=user_id)
-    user.events.add(event_id)
+    User_Avatar.objects.get(user_id=user_id).events.add(event_id)
     # Event.objects.get(id=event_id).user_avatar.add(user_id)
     return redirect('/user') 
 
@@ -110,4 +109,8 @@ def add_bio(request, user_id):
     user = User_Avatar.objects.get(user_id=user_id)
     user.bio = request.GET.get('bio')
     user.save()
+    return redirect('/user')
+
+def delete_going(request, user_id, event_id):
+    User_Avatar.objects.get(user_id=user_id).events.remove(event_id)
     return redirect('/user')

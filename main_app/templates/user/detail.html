@@ -1,19 +1,39 @@
 {% extends 'base.html' %} {% block content %}
 <div class="wrapper">
+  
+      {% for item in user.user_avatar_set.all %}
+      <div class="card">
+        <div class="card-content">
+      <img class="responsive-img smallImg" src="{{item.url}}"/><div class="userTitle">{{ user }}</div>
+      <h3>Bio:</h3>
+      <p>{{item.bio}}</p>
+    </div>
+  </div>
   <div class="card">
-    <div class="card-content">
-      {% for photo in user.user_avatar_set.all %}
-      <img class="responsive-img smallImg" src="{{photo.url}}"/>
+      {% for event in item.events.all%}
+      <div class="card-content">
+      <h4>{{event.event_name}}</h4>
+      <br>
+      {{event.location}}
+      <br>
+      {{event.date}}
+      <br>
+      <a href="{% url 'delete_going' user.id event.id%}"><button>Not Going</button></a>
+      </div>
       {% empty %}
-      <h1>there is not a photo</h1>
       {% endfor %}
-      <div class="userTitle">{{ uer }}</div>
+      {% empty %}
+      {% endfor %}
+    
+  </div>
     </div>
   </div>
 </div>
 <div class="card">
   <div class="card-content">
-      <h1>{{ user_avatar.events.all }}</h1>
+    
+      
+      <h1>{{ user.user_avatar_set.bio}}</h1>
     </div>
     </div>
     <form action="{% url 'add_bio' user.id%}" method="POST">
