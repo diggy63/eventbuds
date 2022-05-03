@@ -21,6 +21,7 @@
       <a href="{% url 'delete_going' user.id event.id%}"><button>Not Going</button></a>
       </div>
       {% empty %}
+      <h3>This user has no events</h3>
       {% endfor %}
       {% empty %}
       {% endfor %}
