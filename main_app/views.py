@@ -7,12 +7,12 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from dotenv import load_dotenv
 from .models import Event, Comment
 import requests, os
-from .models import Event, Comment, User_Avatar
+from .models import Event, Comment, User_Avatar, User_Event
 import uuid
 import boto3
 
-S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'catcollectorbucketdk'
+S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
+BUCKET = 'catcollectorbucket002'
 
 # Create your views here.
 def home(request):
@@ -98,9 +98,13 @@ def add_photo(request, user_id):
   return redirect('/user')  
 
 def going_event(request, event_id, user_id):
-    User_Avatar.objects.get(user_id=user_id).events.add(event_id)
+    user = User_Avatar.objects.get(user_id=user_id)
+    event = Event.objects.get(id=event_id)
+    user_event = User_Event.objects.create(user=user, event=event)
+    user_event.save()
+    print(user_event)
     # Event.objects.get(id=event_id).user_avatar.add(user_id)
-    return redirect('/user') 
+    return redirect('/user')
 
 def create_user(request):
     return render(request, 'user/create.html')
@@ -109,8 +113,4 @@ def add_bio(request, user_id):
     user = User_Avatar.objects.get(user_id=user_id)
     user.bio = request.GET.get('bio')
     user.save()
-    return redirect('/user')
-
-def delete_going(request, user_id, event_id):
-    User_Avatar.objects.get(user_id=user_id).events.remove(event_id)
     return redirect('/user')
