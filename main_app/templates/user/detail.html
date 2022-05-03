@@ -12,7 +12,7 @@
   <div class="card">
       {% for event in item.events.all%}
       <div class="card-content">
-      <h4>{{event.event_name}}</h4>
+      <a href="{% url 'event_detail' event.id %}"><h4>{{event.event_name}}</h4></a>
       <br>
       {{event.location}}
       <br>
