@@ -59,27 +59,27 @@ class EventCreate(CreateView):
     model = Event
     fields = '__all__'
 
-def create_comment(request, event_id):
+def create_comment(request, event_id, user_id):
     event = Event.objects.get(id=event_id)
     comment = Comment.objects.create(user=request.user, event=event, content=request.POST.get('content', ''))
-    return redirect('event_detail', event_id=event_id)
+    return redirect(f'/events/{event_id}/{user_id}')
 
-def delete_comment(request, event_id, comment_id):
+def delete_comment(request, event_id, comment_id, user_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
-    return redirect('event_detail', event_id=event_id)
+    return redirect(f'/events/{event_id}/{user_id}')
 
-def update_comment(request, event_id, comment_id):
+def update_comment(request, event_id, comment_id, user_id):
     comment = Comment.objects.get(id=comment_id)
-    return render(request, 'comment/update.html', {'comment': comment, 'event_id': event_id}) 
+    return render(request, 'comment/update.html', {'comment': comment, 'event_id': event_id, 'user_id':user_id}) 
 
-def update_content(request, event_id, comment_id):
+def update_content(request, event_id, comment_id, user_id):
     comment = Comment.objects.get(id=comment_id)
     content = request.POST.get('content')
     comment.content = content
     comment.save()
     
-    return redirect('event_detail', event_id=event_id)
+    return redirect(f'/events/{event_id}/{user_id}')
     
 
 def search(request):
