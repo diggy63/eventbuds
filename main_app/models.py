@@ -8,7 +8,7 @@ class Event(models.Model):
     event_type = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
     artist = models.CharField(max_length=100)
-    image = models.CharField(max_length=100)
+    image = models.TextField(max_length=250)
     description = models.TextField(max_length=200)
     date = models.DateField()
     url_ticketmaster = models.CharField(max_length=100, unique=True)

@@ -29,7 +29,7 @@
       <td>{% for item in event.classifications %} {{item.segment.name}} {% endfor %}</td>
       <td>{{event.dates.start.localDate}}</td>
       <th>
-        <form method="POST" action="{% url 'ticketmaster_create' event.id %}">
+        <form method="POST" action="{% url 'ticketmaster_create' event.id user.id %}">
           {% csrf_token %}
           <input type="submit" class="btn" value="Create event" />
         </form>
