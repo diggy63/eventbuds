@@ -1,11 +1,12 @@
 from operator import indexOf
 from queue import Empty
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from dotenv import load_dotenv
+from psycopg2 import Date
 from .models import Event, Comment
 import requests, os
 from .models import Event, Comment, User_Avatar
@@ -122,10 +123,11 @@ def ticketmaster_event(request, ticketmaster_id):
                 'artist':'None',
                 'image':'None',
                 'description':'None',
-                'date':'None'})
+                'date':'2022-05-03'})
             return render(request, 'events/detail.html', {'event': event})
         else:
-            return render(request, 'events/detail.html', {'event':None})
+            return Http404()
+
 def create_user(request):
     return render(request, 'user/create.html')
 
