@@ -14,7 +14,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'catcollectorbucketdk'
+BUCKET = 'eventbuds'
 
 # Create your views here.
 def home(request):
@@ -193,4 +193,3 @@ def not_going(request, user_id, event_id):
     delete_connect = User_Event.objects.get(user=user, event=event)
     delete_connect.delete()
     return redirect('/user')
-
