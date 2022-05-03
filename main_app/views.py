@@ -101,7 +101,6 @@ def going_event(request, event_id, user_id):
     user = User_Avatar.objects.get(user_id=user_id)
     user.events.add(event_id)
     # Event.objects.get(id=event_id).user_avatar.add(user_id)
-    print(user)
     return redirect('/user') 
 
 def create_user(request):
