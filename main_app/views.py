@@ -252,7 +252,7 @@ class EventDelete(DeleteView):
 
 def get_update(request, user_id):
     viewUser = User_Avatar.objects.get(id=user_id)
-    return render(request, 'user/update.html', {'viewUser': viewUser})
+    return render(request, 'user/update.html', {'ownerUser': viewUser})
 
 def update_profile(request, user_id):
     userView = User_Avatar.objects.get(id=user_id)
@@ -280,5 +280,5 @@ def add_comment(request, user_id):
     userProfile = User_Avatar.objects.get(user_id=user_id)
     comment = Comment.objects.create(user=request.user, profile=userProfile, content=request.POST.get('content', ''))
     comment.save()
-    print(comment)
+    print(comment.user)
     return redirect(f'/user/{user_id}')

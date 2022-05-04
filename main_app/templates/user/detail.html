@@ -54,14 +54,13 @@
       </form>
   </div>
   <div>
-    {% for comment in comment.content_set.all %}
+    {% for comment in ownerUser.comment_set.all %}
     <ul>
       <li>{{comment.user}}</li>
       <li>{{comment.content}}</li>
     
       {% if comment.user.id == user.id %}
-      <li><a href="{% url 'update_comment' event.id comment.id user.id %}"><button>update</button></a></li>
-      <a href="{% url 'delete_comment' event.id comment.id user.id %}">X</a>
+
       {% endif %}
         
     </ul>
@@ -69,6 +68,8 @@
     <p>No comments yet</p>
     {% endfor %} 
   </div>
+
+  {{ ownerUser.comment_set.all }}
     <!-- <form action="{% url 'add_bio' user.id%}" method="POST">
       {% csrf_token %}
       <input type="textarea" name="bio">
