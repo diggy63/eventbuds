@@ -115,7 +115,7 @@ def search(request):
 
 def user_detail(request, user_id):
     viewUser = User_Avatar.objects.get(user_id=user_id)
-    return render(request, 'user/detail.html', {'viewUser': viewUser})
+    return render(request, 'user/detail.html', {'ownerUser': viewUser})
 
 def add_photo(request, user_id):
   # photo-file will be the "name" attribute on the <input type="file">
