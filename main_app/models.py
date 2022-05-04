@@ -45,6 +45,6 @@ class User_Event(models.Model):
 class TicketMasterEvent(Event):
         url_ticketmaster = models.CharField(max_length=100, unique=True)
 
-class Replycomment(models.Model):
+class Reply(models.Model):
     original = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    reply = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    replyto = models.ForeignKey(Comment, on_delete=models.CASCADE)
