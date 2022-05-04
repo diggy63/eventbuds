@@ -1,3 +1,4 @@
+from ast import Delete
 from email.mime import image
 from operator import indexOf
 from queue import Empty
@@ -226,7 +227,7 @@ def not_going(request, user_id, event_id):
 
 def update_event(request, event_id):
     event = Event.objects.get(id=event_id)
-    return render(request, 'events/update.html', {'event': event}) 
+    return render(request, 'events/update.html', {'event': event})  
 
 def update_details(request, event_id, user_id):
     event = Event.objects.get(id=event_id)
@@ -239,3 +240,7 @@ def update_details(request, event_id, user_id):
     event.date = request.POST.get('date')
     event.save()
     return redirect(f'/events/{event_id}/{user_id}')
+
+class EventDelete(DeleteView):
+    model = Event
+    success_url = '/events/'
