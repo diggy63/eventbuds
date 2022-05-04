@@ -2,6 +2,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    /* background-image: url('/static/images/eventbg.jpg'); */
     
   }
   
@@ -23,6 +24,11 @@ body {
     border-radius: 100%;
   }
   
+  .mediumImg{
+    max-height: 20vh;
+    border-radius: 100%;
+  }
+
   .wrapper{
   }
   .userTitle{

@@ -115,7 +115,7 @@ def search(request):
 
 def user_detail(request, user_id):
     viewUser = User_Avatar.objects.get(user_id=user_id)
-    return render(request, 'user/detail.html', {'viewUser': viewUser})
+    return render(request, 'user/detail.html', {'ownerUser': viewUser})
 
 def add_photo(request, user_id):
   # photo-file will be the "name" attribute on the <input type="file">
@@ -250,9 +250,39 @@ class EventDelete(DeleteView):
     model = Event
     success_url = '/events/'
 
+def get_update(request, user_id):
+    viewUser = User_Avatar.objects.get(id=user_id)
+    return render(request, 'user/update.html', {'viewUser': viewUser})
+
+def update_profile(request, user_id):
+    userView = User_Avatar.objects.get(id=user_id)
+    photo_file = request.FILES.get('photo-file', None)
+    user_bio = request.POST.get('bio', None)
+    userView.bio = user_bio
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            #build the full url string
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            # we can assign to cat_id or cat (if you have a cat object)
+            userView.url = url
+            print("photo was sucessful")
+        except:
+            print('An error occurred uploading to S3.')    
+    userView.save()
+    return redirect(f'/user/{userView.user.id}')
 
 def add_comment(request, user_id):
     print(user_id)
     viewUser = User_Avatar.objects.get(user_id=user_id)
+<<<<<<< HEAD
     print(viewUser.user.id)
     return render(request, 'user/detail.html', {'viewUser': viewUser})
+=======
+    print(viewUser)
+    return render('user/detail.html')
+>>>>>>> main
