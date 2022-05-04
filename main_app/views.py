@@ -252,7 +252,5 @@ class EventDelete(DeleteView):
 
 
 def add_comment(request, user_id):
-    print(user_id)
-    viewUser = User_Avatar.objects.get(user_id=user_id)
-    print(viewUser)
+    print(user_id,'<-------userid')
     return render('user/detail.html')
