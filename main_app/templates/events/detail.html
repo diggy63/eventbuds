@@ -45,7 +45,7 @@
   </div>
   </div>
 </div>
-<form method="POST" action="{% url 'create_comment' event.id %}">
+<form method="POST" action="{% url 'create_comment' event.id user.id %}">
   {% csrf_token %}
   <input type="textarea" name="content" />
   <input type="submit" name="submit" />
@@ -54,8 +54,12 @@
 <ul>
   <li>{{comment.user}}</li>
   <li>{{comment.content}}</li>
-  <li><a href="{% url 'update_comment' event.id comment.id %}"><button>Update</button></a></li>
-  <li><a href="{% url 'delete_comment' event.id comment.id %}"><button>Delete</button></a></li>
+
+  {% if comment.user.id == user.id %}
+  <li><a href="{% url 'update_comment' event.id comment.id user.id %}"><button>update</button></a></li>
+  <a href="{% url 'delete_comment' event.id comment.id user.id %}">X</a>
+  {% endif %}
+    
 </ul>
 {% empty %}
 <p>No comments yet</p>

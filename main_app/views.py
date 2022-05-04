@@ -76,27 +76,27 @@ def new_event(request):
     event.save()
     return redirect('/events/')
 
-def create_comment(request, event_id):
+def create_comment(request, event_id, user_id):
     event = Event.objects.get(id=event_id)
     comment = Comment.objects.create(user=request.user, event=event, content=request.POST.get('content', ''))
-    return redirect('event_detail', event_id=event_id)
+    return redirect(f'/events/{event_id}/{user_id}')
 
-def delete_comment(request, event_id, comment_id):
+def delete_comment(request, event_id, comment_id, user_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
-    return redirect('event_detail', event_id=event_id)
+    return redirect(f'/events/{event_id}/{user_id}')
 
-def update_comment(request, event_id, comment_id):
+def update_comment(request, event_id, comment_id, user_id):
     comment = Comment.objects.get(id=comment_id)
-    return render(request, 'comment/update.html', {'comment': comment, 'event_id': event_id}) 
+    return render(request, 'comment/update.html', {'comment': comment, 'event_id': event_id, 'user_id':user_id}) 
 
-def update_content(request, event_id, comment_id):
+def update_content(request, event_id, comment_id, user_id):
     comment = Comment.objects.get(id=comment_id)
     content = request.POST.get('content')
     comment.content = content
     comment.save()
     
-    return redirect('event_detail', event_id=event_id)
+    return redirect(f'/events/{event_id}/{user_id}')
     
 
 def search(request):
@@ -174,7 +174,7 @@ def going_event(request, event_id, user_id):
 #         else:
 #             return render(request, 'events/search.html', {'events': []})
 
-def ticketmaster_create(request, event_id):
+def ticketmaster_create(request, event_id, user_id):
     load_dotenv()
     key = os.getenv('ACCESS_TOKEN')
     r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?id={event_id}&apikey={key}')
