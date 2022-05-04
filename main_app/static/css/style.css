@@ -94,7 +94,13 @@ body {
   .nomargintop{
     margin-top: 0px;
   }
-
+  .margintopvh{
+    margin-top: 10vh;
+  }
   .margintop{
     margin-top: 20px;
+  }
+  .fonttitle{
+    font-size: 60px;
+    font-family: 'Racing Sans One', cursive;
   }

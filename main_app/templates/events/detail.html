@@ -1,6 +1,10 @@
 {% extends 'base.html' %} {% block content %}
-
-<h1>Event {{ event.event_name }}</h1>
+<div class="card">
+  <div class="card-content margintopvh center">
+    <div class="fonttitle">{{ event.event_name }}</div>
+  </div>
+</div>
+Event {{ event.event_name }}
 
 <img id="event-photo" class="responsive-img smallImg"src="{{ event.image }}" alt="event photo">
 
