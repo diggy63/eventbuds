@@ -42,9 +42,9 @@
         <!-- {{user.user_avatar_set.first.user_event_set.all}} -->
 
         {% if show_going == True %}
-        <a class="center" href="{% url 'going_event' event.id user.id %}"
+        <div class="center"><a class="center" href="{% url 'going_event' event.id user.id %}"
           ><button class="btn">Going to the Event</button></a
-        >
+        ></div>
         {% endif %}
         <br />
       </div>
