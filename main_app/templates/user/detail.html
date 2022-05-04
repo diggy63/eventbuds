@@ -46,8 +46,27 @@
   </div>
   </div>
   <div>
-    <a href="{% url 'add_comment' user.id %}">add comment</a>
+    <form method="POST" action="{% url 'add_comment' ownerUser.user.id %}">
+        {% csrf_token %}
+        <input type="textarea" name="content" />
+        <input type="submit" name="submit" />
+      </form>
+  </div>
+  <div>
+    {% for comment in comment.content_set.all %}
+    <ul>
+      <li>{{comment.user}}</li>
+      <li>{{comment.content}}</li>
     
+      {% if comment.user.id == user.id %}
+      <li><a href="{% url 'update_comment' event.id comment.id user.id %}"><button>update</button></a></li>
+      <a href="{% url 'delete_comment' event.id comment.id user.id %}">X</a>
+      {% endif %}
+        
+    </ul>
+    {% empty %}
+    <p>No comments yet</p>
+    {% endfor %} 
   </div>
     <!-- <form action="{% url 'add_bio' user.id%}" method="POST">
       {% csrf_token %}
