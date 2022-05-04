@@ -104,3 +104,9 @@ body {
     font-size: 60px;
     font-family: 'Racing Sans One', cursive;
   }
+
+  #nav-avatar {
+    max-height: 30px;
+    margin: 5px;
+    border-radius: 50%;
+  }
