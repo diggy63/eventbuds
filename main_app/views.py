@@ -16,7 +16,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'catcollectorbucketdk'
+BUCKET = 'eventbuds'
 
 # Create your views here.
 def home(request):
@@ -277,7 +277,8 @@ def update_profile(request, user_id):
     return redirect(f'/user/{userView.user.id}')
 
 def add_comment(request, user_id):
-    print(user_id)
-    viewUser = User_Avatar.objects.get(user_id=user_id)
-    print(viewUser)
-    return render('user/detail.html')
+    userProfile = User_Avatar.objects.get(user_id=user_id)
+    comment = Comment.objects.create(user=request.user, profile=userProfile, content=request.POST.get('content', ''))
+    comment.save()
+    print(comment)
+    return redirect(f'/user/{user_id}')
