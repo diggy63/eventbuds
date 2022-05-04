@@ -123,3 +123,17 @@ body {
     max-height: 100%;
     max-width: 100%;
   }
+  .fillcard{
+    max-height: 100%;
+    max-width: 100%;
+  }
+  .eventPhoto {
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
