@@ -51,6 +51,25 @@
         <input type="textarea" name="content" />
         <input type="submit" name="submit" />
       </form>
+<<<<<<< HEAD
+=======
+  </div>
+  <div>
+    {% for comment in comment.content_set.all %}
+    <ul>
+      <li>{{comment.user}}</li>
+      <li>{{comment.content}}</li>
+    
+      {% if comment.user.id == user.id %}
+      <li><a href="{% url 'update_comment' event.id comment.id user.id %}"><button>update</button></a></li>
+      <a href="{% url 'delete_comment' event.id comment.id user.id %}">X</a>
+      {% endif %}
+        
+    </ul>
+    {% empty %}
+    <p>No comments yet</p>
+    {% endfor %} 
+>>>>>>> main
   </div>
     <!-- <form action="{% url 'add_bio' user.id%}" method="POST">
       {% csrf_token %}
