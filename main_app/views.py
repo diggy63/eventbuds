@@ -16,7 +16,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'eventbuds'
+BUCKET = 'catcollectorbucketdk'
 
 # Create your views here.
 def home(request):
@@ -121,6 +121,8 @@ def add_photo(request, user_id):
   # photo-file will be the "name" attribute on the <input type="file">
   photo_file = request.FILES.get('photo-file', None)
   user_bio = request.POST.get('bio', None)
+  User_Avatar.objects.create(user_id=user_id, bio= user_bio)
+  user = User_Avatar.objects.get(user_id= user_id)
   if photo_file:
     s3 = boto3.client('s3')
     # need a unique "key" for S3 / needs image file extension too
@@ -131,12 +133,10 @@ def add_photo(request, user_id):
       #build the full url string
       url = f"{S3_BASE_URL}{BUCKET}/{key}"
       # we can assign to cat_id or cat (if you have a cat object)
-      User_Avatar.objects.create(url=url, user_id=user_id, bio= user_bio)
-      user = User_Avatar.objects.get(user_id= user_id)
+      user.url = url
       user.save()
       print("photo was sucessful")
     except:
-      User_Avatar.objects.create(user_id=user_id, bio = user_bio)
       print('An error occurred uploading to S3.')
   return redirect(f'/user/{user_id}')
 
