@@ -46,8 +46,11 @@
   </div>
   </div>
   <div>
-    <a href="{% url 'add_comment' user.id %}">add comment</a>
-    
+    <form method="POST" action="{% url 'add_comment' ownerUser.user.id %}">
+        {% csrf_token %}
+        <input type="textarea" name="content" />
+        <input type="submit" name="submit" />
+      </form>
   </div>
     <!-- <form action="{% url 'add_bio' user.id%}" method="POST">
       {% csrf_token %}
