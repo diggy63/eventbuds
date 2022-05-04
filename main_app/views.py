@@ -283,7 +283,7 @@ def add_comment(request, user_id):
     print(comment.user)
     return redirect(f'/user/{user_id}')
 
-def delete_profile_comment(request, comment_id, user_id):
+def delete_profile_comment(request, user_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
-    return redirect(f'/events/{user_id}')
+    return redirect(f'/user/{user_id}')
