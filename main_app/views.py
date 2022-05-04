@@ -197,12 +197,13 @@ def ticketmaster_create(request, event_id, user_id):
         else:
             artist = 'None'
         date = the_event['dates']['start']['localDate']
+        event_image = the_event['images'][0]['url']
         event = TicketMasterEvent.objects.get_or_create(url_ticketmaster = event_id, defaults={
                     'event_name':event_name,
                     'event_type':event_type,
                     'location': location,
                     'artist':artist,
-                    'image':'None',
+                    'image':event_image,
                     'description':'None',
                     'date':date})
         return redirect(f'/events/{TicketMasterEvent.objects.get(url_ticketmaster=event_id).id}/{user_id}')
