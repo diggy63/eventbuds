@@ -60,7 +60,7 @@
       <li>{{comment.content}}</li>
     
       {% if comment.user.id == user.id %}
-        <a href="{% url 'delete_profile_comment' user.id comment.id %}"><button>Delete</button></a>
+        <a href="{% url 'delete_profile_comment' ownerUser.user.id comment.id %}"><button>Delete</button></a>
         
       {% endif %}
 
