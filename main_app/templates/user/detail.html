@@ -1,15 +1,18 @@
 {% extends 'base.html' %} {% block content %}
 <div class="wrapper">
   <div class="card">
-    <div class="card-content">
-      <img class="esponsive-img smallImg" src="{{viewUser.url}}">
-      <div class="userTitle">{{ viewUser.user }}</div>
+    <div class="card-content center">
+      <img class="esponsive-img smallImg" src="{{ownerUser.url}}">
+      <div class="userTitle center">{{ ownerUser.user }}</div>
+      {% if ownerUser.user.id == user.id %}
+      <a href="{% url 'get_update' ownerUser.id%}"><button class="btn right">Update profile</button></a>
+      {% endif %}
     </div>
     </div>
     <div class="card">
       <div class="card-content">
         <div class="labelClass"> Bio:</div>
-        {{viewUser.bio}}
+        {{ownerUser.bio}}
         <br>
     </div>
     </div>
@@ -17,7 +20,7 @@
   <div class="card-content">
     <h2>Events</h2>
     <div class="row">
-    {% for item in viewUser.user_event_set.all  %}
+    {% for item in ownerUser.user_event_set.all  %}
     <div class="col s6">
     <div class="card">
         <div class="card-content">
@@ -30,7 +33,7 @@
     <a href="{% url 'event_detail' item.event.id user.id %}"><button class="btn">Details</button></a>
     
     
-    {% if user.id == viewUser.user.id %}
+    {% if user.id == ownerUser.user.id %}
     <a href="{% url 'not_going' user.id item.event.id%}"><button class="btn">Not Going</button></a>
     {% endif %}
       
