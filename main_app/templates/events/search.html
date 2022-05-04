@@ -1,13 +1,22 @@
 {% extends 'base.html' %} {% block content %} 
 <div>
+  
   <h1>Search for events</h1>
+  </div>
+  <div class="card round">
+    <div class="card-content">
   <form method="GET" action="{% url 'search' %}">
-    {% csrf_token %}
+    {% csrf_token %}<div class="row valign-wrapper">
+      <div class="col s11">
     <input type="search" name="q" placeholder="Search..." autocomplete="off" />
-    <input class="hide-on-med-and-down" type="submit" name="Search" value="Search" />
+    </div>
+    <div class="col s1">
+    <input class="hide-on-med-and-down btn" type="submit" name="Search" value="Search" />
+    </div>
+    </div>
   </form>
-</div>
 {% if events %}
+<div class="border round">
 <table class="striped responsive-table">
   <thead>
     <tr>
@@ -38,6 +47,10 @@
     {% endfor %}
   </tbody>
 </table>
+</div>
 {% else %}
 <p>No venue found...</p>
-{% endif %} {% endblock content %}
+{% endif %} 
+</div>
+</div>
+{% endblock content %}
