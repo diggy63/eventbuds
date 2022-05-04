@@ -1,9 +1,12 @@
 {% extends 'base.html' %} {% block content %}
 <div class="wrapper">
   <div class="card">
-    <div class="card-content">
+    <div class="card-content center">
       <img class="esponsive-img smallImg" src="{{viewUser.url}}">
-      <div class="userTitle">{{ viewUser.user }}</div>
+      <div class="userTitle center">{{ viewUser.user }}</div>
+      {% if viewUser.user.id == user.id %}
+      <a href="{% url 'get_update' viewUser.id%}"><button class="btn right">Update profile</button></a>
+      {% endif %}
     </div>
     </div>
     <div class="card">

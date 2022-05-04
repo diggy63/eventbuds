@@ -23,6 +23,11 @@ body {
     border-radius: 100%;
   }
   
+  .mediumImg{
+    max-height: 20vh;
+    border-radius: 100%;
+  }
+
   .wrapper{
   }
   .userTitle{
