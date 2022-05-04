@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from dotenv import load_dotenv
 from psycopg2 import Date
-from .models import Event, Comment
+from .models import Event, Comment, TicketMasterEvent
 import requests, os
 from .models import Event, Comment, User_Avatar, User_Event
 import uuid
@@ -197,7 +197,7 @@ def ticketmaster_create(request, event_id, user_id):
         else:
             artist = 'None'
         date = the_event['dates']['start']['localDate']
-        event = Event.objects.get_or_create(url_ticketmaster = event_id, defaults={
+        event = TicketMasterEvent.objects.get_or_create(url_ticketmaster = event_id, defaults={
                     'event_name':event_name,
                     'event_type':event_type,
                     'location': location,
@@ -205,7 +205,7 @@ def ticketmaster_create(request, event_id, user_id):
                     'image':'None',
                     'description':'None',
                     'date':date})
-        return redirect(f'/events/{Event.objects.get(url_ticketmaster=event_id).id}/{user_id}')
+        return redirect(f'/events/{TicketMasterEvent.objects.get(url_ticketmaster=event_id).id}/{user_id}')
     else:
         return redirect(f'/events/search')  
 
