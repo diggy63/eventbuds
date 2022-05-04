@@ -275,3 +275,9 @@ def update_profile(request, user_id):
             print('An error occurred uploading to S3.')    
     userView.save()
     return redirect(f'/user/{userView.user.id}')
+
+def add_comment(request, user_id):
+    print(user_id)
+    viewUser = User_Avatar.objects.get(user_id=user_id)
+    print(viewUser)
+    return render('user/detail.html')
