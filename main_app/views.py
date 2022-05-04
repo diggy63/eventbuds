@@ -249,3 +249,10 @@ def update_details(request, event_id, user_id):
 class EventDelete(DeleteView):
     model = Event
     success_url = '/events/'
+
+
+def add_comment(request, user_id):
+    print(user_id)
+    viewUser = User_Avatar.objects.get(user_id=user_id)
+    print(viewUser)
+    return render('user/detail.html')
