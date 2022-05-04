@@ -173,7 +173,7 @@ def going_event(request, event_id, user_id):
 #         else:
 #             return render(request, 'events/search.html', {'events': []})
 
-def ticketmaster_create(request, event_id):
+def ticketmaster_create(request, event_id, user_id):
     load_dotenv()
     key = os.getenv('ACCESS_TOKEN')
     r = requests.get(f'https://app.ticketmaster.com/discovery/v2/events.json?id={event_id}&apikey={key}')
