@@ -5,73 +5,105 @@
   </div>
 </div>
 
-<div class="center">
-</div>
+<div class="center"></div>
 <div class="row">
   <div class="col s6">
     <div class="card">
       <div class="card-content">
-<a href="{% url 'update_event' event.id %}"><button class="btn">Update Event</button></a>
-<ul>
-  <li>Type:{{ event.event_type }}</li>
-  <li>Location:{{ event.location }}</li>
-  <li>Artist:{{ event.artist }}</li>
-  <li>Description{{ event.description}}</li>
-  <li>Date:{{ event.date }}</li>
-  <li>{{ event.url_ticketmaster }}</li>
-  </ul>
-  
+        <a href="{% url 'update_event' event.id %}"
+          ><button class="btn">Update Event</button></a
+        >
+        <ul>
+          <li>Type:{{ event.event_type }}</li>
+          <li>Location:{{ event.location }}</li>
+          <li>Artist:{{ event.artist }}</li>
+          <li>Description{{ event.description}}</li>
+          <li>Date:{{ event.date }}</li>
+          <li>{{ event.url_ticketmaster }}</li>
+        </ul>
 
-    
-  <!-- {{user.user_avatar_set.first.user_event_set.all}} -->
-  
-  {% if show_going == True %}
-  <a href="{% url 'going_event' event.id user.id %}"><button class="btn">Going to the Event</button></a>
-  {% endif %}
-<br>
+        <!-- {{user.user_avatar_set.first.user_event_set.all}} -->
 
-</div>
-</div>
-</div>
-<div class="col s6">
-  <div class="card">
-    <div class="card-content">
-      <img id="event-photo" class="responsive-img center"src="{{ event.image }}" alt="event photo">
-
-</div>
+        {% if show_going == True %}
+        <a href="{% url 'going_event' event.id user.id %}"
+          ><button class="btn">Going to the Event</button></a
+        >
+        {% endif %}
+        <br />
+      </div>
+    </div>
   </div>
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <img
+          id="event-photo"
+          class="responsive-img center"
+          src="{{ event.image }}"
+          alt="event photo"
+        />
+      </div>
+    </div>
   </div>
 </div>
 <div class="row">
-  <div class="col s6">
-<form method="POST" action="{% url 'create_comment' event.id user.id %}">
-  {% csrf_token %}
-  <input type="textarea" name="content" />
-  <input type="submit" name="submit" />
-</form>
-{% for comment in event.comment_set.all %}
-<ul>
-  <li>{{comment.user}}</li>
-  <li>{{comment.content}}</li>
+  <div class="col s8">
+    <div class="card">
+      <div class="card-content">
+        <form
+          method="POST"
+          action="{% url 'create_comment' event.id user.id %}"
+        >
+          {% csrf_token %}
+          <input type="textarea" name="content" />
+          <input type="submit" name="submit" />
+        </form>
+        <div class="card round commentBorder">
+          <div class="card-content">
+        {% for comment in event.comment_set.all %}
+        
+        <ul>
+          <li class="commentUser">{{comment.user}}</li>
+          <br>
+          <li class="commentBorder round">{{comment.content}}</li>
 
-  {% if comment.user.id == user.id %}
-  <li><a href="{% url 'update_comment' event.id comment.id user.id %}"><button>update</button></a></li>
-  <a href="{% url 'delete_comment' event.id comment.id user.id %}">X</a>
-  {% endif %}
-    
-</ul>
-{% empty %}
-<p>No comments yet</p>
-{% endfor %} 
-</div>
-<div class="col s6">
-<h5>People going to the event</h5>
-<ul>
-  {% for user in event.user_event_set.all %}
-<br>
-  <li><a href="{% url 'user_detail' user.user.user.id %}" >{{user.user.user}}</a></li>
-{% endfor %}
-</ul>
-</div>
+          {% if comment.user.id == user.id %}
+          <li>
+            <a href="{% url 'update_comment' event.id comment.id user.id %}"
+              ><button class="btn">update</button></a
+            >       
+          <a href="{% url 'delete_comment' event.id comment.id user.id %}"><button class="btn">X</button></a>
+          </li>
+          {% endif %}
+        </ul>
+        {% empty %}
+        <p>No comments yet</p>
+        {% endfor %}
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s4">
+    <div class="card oneH">
+      <div class="card-content oneH">
+        <h5>People going to the event</h5>
+        <ul>
+          {% for user in event.user_event_set.all %}
+          <br />
+          
+          <li>
+            <div class="flexy">
+            <a href="{% url 'user_detail' user.user.user.id %}" class="valign-wrapper"
+              ><img class="responsive-img avatarImg" src="{{user.user.user.user_avatar_set.first.url}}">
+              <span class="fill">{{user.user.user}}</span>
+              </a>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock content %}
