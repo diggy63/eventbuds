@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from dotenv import load_dotenv
 from psycopg2 import Date
+import urllib
 from .models import Event, Comment, TicketMasterEvent
 import requests, os
 from .models import Event, Comment, User_Avatar, User_Event
@@ -185,9 +186,12 @@ def ticketmaster_create(request, event_id, user_id):
     second_embed = the_event.get('_embedded', {})
     if second_embed:
         event_name = the_event['name']
+        description = urllib.parse.unquote(the_event['url'])
+        description = description.split('?u=')[1]
+        print(description)
         event_type = the_event.get('classifications', [])
         if event_type:
-            event_type = event_type[0]['segment']['name']
+            event_type = event_type[0]['segment']['name'] + ' - ' + event_type[0]['subGenre']['name']
         else:
             event_type = 'None'
         location = the_event['_embedded']['venues'][0].get('name', 'None')
@@ -202,13 +206,14 @@ def ticketmaster_create(request, event_id, user_id):
             event_image = event_image[0]['url']
         else:
             event_image = 'None'
+        
         event = TicketMasterEvent.objects.get_or_create(url_ticketmaster = event_id, defaults={
                     'event_name':event_name,
                     'event_type':event_type,
                     'location': location,
                     'artist':artist,
                     'image':event_image,
-                    'description':'None',
+                    'description':description,
                     'date':date})
         return redirect(f'/events/{TicketMasterEvent.objects.get(url_ticketmaster=event_id).id}/{user_id}')
     else:
