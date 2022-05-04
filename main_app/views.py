@@ -256,7 +256,7 @@ class EventDelete(DeleteView):
 
 def get_update(request, user_id):
     viewUser = User_Avatar.objects.get(id=user_id)
-    return render(request, 'user/update.html', {'ownerUser': viewUser})
+    return render(request, 'user/update.html', {'viewUser': viewUser})
 
 def update_profile(request, user_id):
     userView = User_Avatar.objects.get(id=user_id)
