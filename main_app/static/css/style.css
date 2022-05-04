@@ -69,6 +69,7 @@ body {
     background-color: rgba(241,250,248, 0.9);
     height: 100vh;
     padding: 0 30px 0 30px;
+    overflow: auto;
 
   }
 
