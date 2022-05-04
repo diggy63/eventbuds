@@ -61,10 +61,6 @@ body {
     border-radius: 10px;
   }
 
-  #event-photo {
-    max-width: 30vh;
-  }
-
   .backg{
     /* background-color:rgb(173,232,244);opacity:0.8; */
     background-color: rgba(241,250,248, 0.9);
