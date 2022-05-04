@@ -2,11 +2,11 @@
 
 
 {% block content %}
-<h1 class="center">{{viewUser.user}}</h1> 
+<h1 class="center">{{ownerUser.user}}</h1> 
 <br>
 <h2 class="center">Edit your profile</h2>
 <div class="card">
-<form action="{%url 'update_profile' viewUser.id %}" enctype="multipart/form-data" method="POST" class="card-panel center">
+<form action="{%url 'update_profile' ownerUser.id %}" enctype="multipart/form-data" method="POST" class="card-panel center">
     {% csrf_token %}
     <div class="row">
     <div class="col s6">
@@ -17,7 +17,7 @@
     <div class="card-content">
         <div class="col s6">
     {% if viewUser.url %}
-    <img class="esponsive-img mediumImg" src="{{viewUser.url}}">
+    <img class="esponsive-img mediumImg" src="{{ownerUser.url}}">
     {% else %}
     <h4>You have no user photo</h4>
     {% endif %}

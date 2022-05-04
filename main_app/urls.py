@@ -27,4 +27,5 @@ urlpatterns = [
     path('user/<int:user_id>/get_update', views.get_update, name='get_update'),
     path('user/<int:user_id>/update_profile', views.update_profile, name='update_profile'),
     path('user/<int:user_id>/add_comment', views.add_comment, name='add_comment'),
+    path('user/<int:user_id>/delete/<int:comment_id>', views.delete_profile_comment, name="delete_profile_comment"),
 ]
