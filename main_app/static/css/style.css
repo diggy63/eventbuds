@@ -1,10 +1,18 @@
 body {
     display: flex;
-    min-height: 100vh;
+    min-height: 100%;
     flex-direction: column;
-    /* background-image: url('/static/images/eventbg.jpg'); */
+    background-image: url('/static/images/eventbg.jpg');
+    background-size: cover;
     
   }
+
+  html, body { 
+    margin: 0; 
+    padding: 0; 
+    height: 100%; 
+    width: 100%;
+  } 
   
   main {
     flex: 1 0 auto;
@@ -21,6 +29,7 @@ body {
 
   .smallImg{
     max-height: 10vh;
+    max-width: 10vw;
     border-radius: 100%;
   }
   
@@ -52,6 +61,40 @@ body {
   }
 
   #event-photo {
-    width: 80%;
-    height: 80%;
+    max-width: 30vh;
+  }
+
+  .backg{
+    /* background-color:rgb(173,232,244);opacity:0.8; */
+    background-color: rgba(241,250,248, 0.9);
+    height: 100vh;
+    padding: 0 30px 0 30px;
+    overflow: auto;
+
+  }
+
+  .container {
+    margin-top: 0px;
+  }
+
+  h1{
+    margin-top: 0px;
+  }
+
+  .round{
+    border-radius: 25px;
+  }
+
+  .border{
+    border-style: solid;
+    padding: 10px;
+    border-color: rgba(241,250,248, 0.99) ;
+  }
+
+  .nomargintop{
+    margin-top: 0px;
+  }
+
+  .margintop{
+    margin-top: 20px;
   }
