@@ -44,3 +44,8 @@ body {
     background-color: #48cae4;
     border-radius: 10px;
   }
+
+  #event-photo {
+    width: 80%;
+    height: 80%;
+  }
