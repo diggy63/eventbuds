@@ -280,5 +280,5 @@ def add_comment(request, user_id):
     userProfile = User_Avatar.objects.get(user_id=user_id)
     comment = Comment.objects.create(user=request.user, profile=userProfile, content=request.POST.get('content', ''))
     comment.save()
-    print(comment)
+    print(comment.user)
     return redirect(f'/user/{user_id}')
