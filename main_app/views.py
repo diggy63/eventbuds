@@ -16,7 +16,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'catcollectorbucketdk'
+BUCKET = 'eventbuds'
 
 # Create your views here.
 def home(request):
@@ -254,5 +254,5 @@ class EventDelete(DeleteView):
 def add_comment(request, user_id):
     print(user_id)
     viewUser = User_Avatar.objects.get(user_id=user_id)
-    print(viewUser)
-    return render('user/detail.html')
+    print(viewUser.user.id)
+    return render(request, 'user/detail.html', {'viewUser': viewUser})
