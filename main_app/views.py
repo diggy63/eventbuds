@@ -186,9 +186,8 @@ def ticketmaster_create(request, event_id, user_id):
     second_embed = the_event.get('_embedded', {})
     if second_embed:
         event_name = the_event['name']
-        description = urllib.parse.unquote(the_event['url'])
+        description = urllib.parse.unquote(the_event['url']) # url decoder then split the tracker off
         description = description.split('?u=')[1]
-        print(description)
         event_type = the_event.get('classifications', [])
         if event_type:
             event_type = event_type[0]['segment']['name'] + ' - ' + event_type[0]['subGenre']['name']
