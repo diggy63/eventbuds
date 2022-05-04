@@ -277,12 +277,8 @@ def update_profile(request, user_id):
     return redirect(f'/user/{userView.user.id}')
 
 def add_comment(request, user_id):
-    print(user_id)
-    viewUser = User_Avatar.objects.get(user_id=user_id)
-<<<<<<< HEAD
-    print(viewUser.user.id)
-    return render(request, 'user/detail.html', {'viewUser': viewUser})
-=======
-    print(viewUser)
-    return render('user/detail.html')
->>>>>>> main
+    userProfile = User_Avatar.objects.get(user_id=user_id)
+    comment = Comment.objects.create(user=request.user, profile=userProfile, content=request.POST.get('content', ''))
+    comment.save()
+    print(comment)
+    return redirect(f'/user/{user_id}')
