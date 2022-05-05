@@ -53,15 +53,12 @@ body {
   .btn {
     background-color: #0077b6;
     border-radius: 10px;
+    margin: 10px;
   }
 
   .btn:hover {
     background-color: #48cae4;
     border-radius: 10px;
-  }
-
-  #event-photo {
-    max-width: 30vh;
   }
 
   .backg{
@@ -82,7 +79,7 @@ body {
   }
 
   .round{
-    border-radius: 25px;
+    border-radius: 10px;
   }
 
   .border{
@@ -103,4 +100,33 @@ body {
   .fonttitle{
     font-size: 60px;
     font-family: 'Racing Sans One', cursive;
+  }
+
+  #nav-avatar {
+    max-height: 30px;
+    margin: 5px;
+    border-radius: 50%;
+  }
+    
+  .oneH{
+    height: 100%;
+  }
+  .commentUser{
+    font-size: 20px;
+  }
+  .commentBorder{
+    border-style: solid;
+    border-color: rgba(241,250,248) ;
+  }
+  .avatarImg{
+    max-height: 50px;
+    border-radius: 100%;
+  }
+  .flexy{
+    display: flex;
+  }
+  .fill{
+    margin: 5px;
+    max-height: 100%;
+    max-width: 100%;
   }
