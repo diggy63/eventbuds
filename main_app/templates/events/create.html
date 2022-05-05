@@ -9,17 +9,23 @@
 <form action="{% url 'new_event' user.id %}" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     <label>Event Name:</label>
-    <input type="text" name="event_name">
+    <input type="text" name="event_name"/>
+    <br>
     <label>Event Type:</label>
-    <input type="text" name="event_type">
+    <input type="text" name="event_type/">
+    <br>
     <label>Location:</label>
-    <input type="text" name="location">
+    <input type="text" name="location"/>
+    <br>
     <label>Artist:</label>
-    <input type="text" name="artist">
+    <input type="text" name="artist"/>
+    <br>
     <label>Description:</label>
-    <input type="text" name="description">
+    <input type="text" name="description"/>
+    <br>
     <label>Date:</label>
-    <input type="date" name="date">
+    <input type="date" name="date"/>
+    <br>
     <label>Image:</label><br>
     <input type="file" name="photo">
     <input type="submit" class="btn addEvent" value="add event">
