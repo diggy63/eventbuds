@@ -61,9 +61,6 @@ def event_detail(request, event_id , user_id):
         show_going = True
     return render(request, 'events/detail.html', {'event':event , 'show_going': show_going} )
 
-# class EventCreate(CreateView):
-#     model = Event
-#     fields = '__all__'
 
 @login_required    
 def create_event(request):

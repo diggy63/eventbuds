@@ -17,7 +17,7 @@ EventBuds is a social media web application that's hosted on Heroku where you ca
 ![alt text](https://i.imgur.com/QSF6Kqh.png)
 ![alt text](https://i.imgur.com/dxA2Tu4.png)
 ![alt text](https://i.imgur.com/ViAM9Po.png)
-![alt text](https://i.imgur.com/zWYeuof.png)
+![alt text](https://i.imgur.com/gIkcXUR.png)
 ![alt text](https://i.imgur.com/0B8SRqY.png)
 
 ## Technologies Used:  
