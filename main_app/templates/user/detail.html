@@ -4,19 +4,17 @@
   <div class="card margintop">
     <div class="card-content center">
       <img class="esponsive-img smallImg" src="{{ownerUser.url}}" />
+      <br>
       <div class="userTitle center">{{ ownerUser.user }}</div>
-      {% if ownerUser.user.id == user.id %}
-      <a href="{% url 'get_update' ownerUser.id%}"
-        ><button class="btn right">Update profile</button></a
-      >
-      {% endif %}
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-content">
+      <br>
       <div class="labelClass">Bio:</div>
       {{ownerUser.bio}}
-      <br />
+      {% if ownerUser.user.id == user.id %}
+      <br>
+      <a href="{% url 'get_update' ownerUser.id%}"
+        ><button class="btn">Update profile</button></a
+      ><br>
+      {% endif %}
     </div>
   </div>
   <div class="card center">
