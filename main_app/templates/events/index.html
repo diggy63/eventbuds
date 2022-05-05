@@ -2,9 +2,11 @@
 
 {% block content %}
 
-<h1 class="margintopvh">Events</h1>
+<h1 class="margintopvh center">Events</h1>
 <a href="{% url 'search' %}"><button class="btn">Search</button></a>
-
+<div class="card round">
+  <div class="card-content">
+    <div class="border round">
 <table class="striped responsive-table">
   <thead>
     <tr>
@@ -33,5 +35,8 @@
     {% endfor %}
   </tbody>
 </table>
+</div>
+</div>
+</div>
 
 {% endblock content %}
