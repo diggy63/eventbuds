@@ -19,7 +19,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'eventbuds'
+BUCKET = 'catcollectorbucketdk'
 
 # Create your views here.
 def home(request):
@@ -249,15 +249,19 @@ def update_event(request, event_id):
 @login_required
 def update_details(request, event_id, user_id):
     photo_file = request.FILES.get('photo', None)
+    print(photo_file)
     event = Event.objects.get(id=event_id)
     event.event_name = request.POST.get('event_name')
     event.event_type = request.POST.get('event_type')
     event.location = request.POST.get('location')
     event.artist = request.POST.get('artist')
-    event.image = request.POST.get('image')
     event.description = request.POST.get('description')
-    event.date = request.POST.get('date')
+    if request.POST.get('date') == "":
+        print('nodate')
+    else:
+        event.date = request.POST.get('date')
     if photo_file:
+        print('here')
         s3 = boto3.client('s3')
         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
         try:
