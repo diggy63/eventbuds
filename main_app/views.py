@@ -71,16 +71,28 @@ def create_event(request):
   
 @login_required    
 def new_event(request, user_id):
+    photo_file = request.FILES.get('photo', None)
+    print(request.FILES)
     event = Event.objects.create(
         event_name=request.POST.get('event_name'),
         event_type=request.POST.get('event_type'),
         location=request.POST.get('location'),
         artist=request.POST.get('artist'),
-        image=request.POST.get('image'),
         description=request.POST.get('description'),
         date=request.POST.get('date'),
         user_id=user_id
         )
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            event.image = url
+            print(event.image)
+            print("photo was sucessful")
+        except:
+            print('An error occurred uploading to S3.')
     event.save()
     return redirect('/events/')
 
@@ -257,6 +269,7 @@ def update_event(request, event_id):
 
 @login_required
 def update_details(request, event_id, user_id):
+    photo_file = request.FILES.get('photo', None)
     event = Event.objects.get(id=event_id)
     event.event_name = request.POST.get('event_name')
     event.event_type = request.POST.get('event_type')
@@ -265,6 +278,16 @@ def update_details(request, event_id, user_id):
     event.image = request.POST.get('image')
     event.description = request.POST.get('description')
     event.date = request.POST.get('date')
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            event.image = url
+            print("photo was sucessful")
+        except:
+            print('An error occurred uploading to S3.')
     event.save()
     return redirect(f'/events/{event_id}/{user_id}')
 
