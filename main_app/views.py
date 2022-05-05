@@ -290,7 +290,7 @@ def update_profile(request, user_id):
             error_name = "Username already taken."
             return render(request, 'user/update.html', {'ownerUser': userView, 'error_name':error_name})
     except:
-        print("New username")
+        print("New username added!")
     userView.bio = user_bio
     userView.user.username = user_name
     if photo_file:
