@@ -3,22 +3,21 @@
 
 {% block content %}
 <div class="wrapper">
-<div class="card">
+<div class="card margintopvh round">
   <div class="card-content">
 <div class="userTitle">{{ user }}</div>
 </div>
 </div>
 </div>
-<div class="card">
+<div class="card round">
   <div class="card-content">
-    </div>
-    </div>
-<form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+<form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     <textarea name="bio">Type Bio</textarea>
     <input type="file" name="photo-file">
     <br><br>
     <input type="submit" class="btn" value="Upload Photo">
 </form>
-
+</div>
+</div>
 {% endblock content %}
