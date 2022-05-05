@@ -80,8 +80,8 @@
           <div class="card-content">
         {% for comment in event.comment_set.all %}
         
-        <ul>
-          <li class="commentUser">{{comment.user}}</li>
+        <ul><a href="{% url 'user_detail' comment.user.id %}"  class="valign-wrapper">
+          <li class="commentUser"><img class="responsive-img avatarImg" src="{{comment.user.user_avatar_set.first.url}}"><span class="fill">{{comment.user}}</span></a></li>
           <br>
           <li class="commentBorder round">{{comment.content}}</li>
 
