@@ -23,6 +23,7 @@ https://trello.com/b/aZzHDRRe/eventbuds
 Python | Django | PostgreSQL | CSS | Materializer | Heroku | Ticketmaster API | AWS |
 
 ## Getting Started:  
+https://eventbuds.herokuapp.com/
 
 ## Icebox:  
 - Public vs private connection.
