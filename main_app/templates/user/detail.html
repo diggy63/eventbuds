@@ -3,7 +3,7 @@
   <h1 class="center">Profile</h1>
   <div class="card margintop">
     <div class="card-content center">
-      <img class="esponsive-img smallImg" src="{{ownerUser.url}}" />
+      <img class="responsive-img smallImg" src="{{ownerUser.url}}" />
       <div class="userTitle center">{{ ownerUser.user }}</div>
       {% if ownerUser.user.id == user.id %}
       <a href="{% url 'get_update' ownerUser.id%}"
