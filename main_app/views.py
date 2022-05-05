@@ -65,7 +65,6 @@ def create_event(request):
     return render(request, 'events/create.html')
     
 def new_event(request, user_id):
-    user = User.objects.get(id=user_id)
     event = Event.objects.create(
         event_name=request.POST.get('event_name'),
         event_type=request.POST.get('event_type'),
