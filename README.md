@@ -14,17 +14,21 @@ EventBuds is a social media web application that's hosted on Heroku where you ca
  ![alt text](https://i.imgur.com/fwA2kbP.png)
 
 ## Wireframe
-![alt text](https://i.imgur.com/qIQETP2.png)
-
-## Trello:  
-https://trello.com/b/aZzHDRRe/eventbuds
+![alt text](https://i.imgur.com/QSF6Kqh.png)
+![alt text](https://i.imgur.com/dxA2Tu4.png)
+![alt text](https://i.imgur.com/ViAM9Po.png)
+![alt text](https://i.imgur.com/gIkcXUR.png)
+![alt text](https://i.imgur.com/0B8SRqY.png)
 
 ## Technologies Used:  
 Python | Django | PostgreSQL | CSS | Materializer | Heroku | Ticketmaster API | AWS |
 
 ## Getting Started:  
-https://eventbuds.herokuapp.com/
+- Deployment: https://eventbuds.herokuapp.com/
+- Trello: https://trello.com/b/aZzHDRRe/eventbuds
+- Pitch-Deck: https://docs.google.com/presentation/d/1zLdbIYD_ugNvmXYU1tkq-xJkiwk6nuA_z8fgE2OuHsk/edit?usp=sharing
 
 ## Icebox:  
 - Public vs private connection.
 - Private messages to another user.
+- Like button.
