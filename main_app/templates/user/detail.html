@@ -4,19 +4,16 @@
   <div class="card margintop">
     <div class="card-content center">
       <img class="esponsive-img smallImg" src="{{ownerUser.url}}" />
+      <br>
       <div class="userTitle center">{{ ownerUser.user }}</div>
-      {% if ownerUser.user.id == user.id %}
-      <a href="{% url 'get_update' ownerUser.id%}"
-        ><button class="btn right">Update profile</button></a
-      >
-      {% endif %}
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-content">
-      <div class="labelClass">Bio:</div>
+      <br>
       {{ownerUser.bio}}
-      <br />
+      {% if ownerUser.user.id == user.id %}
+      <br>
+      <a href="{% url 'get_update' ownerUser.id%}"
+        ><button class="btn">Update profile</button></a
+      ><br>
+      {% endif %}
     </div>
   </div>
   <div class="card center">
@@ -71,7 +68,6 @@
     <div class="col s6 center">
       <div class="card">
         <div class="card-content">
-          <h4>Comment Section</h4>
           <ul class="center">
             
             {% for comment in ownerUser.comment_set.all %}
