@@ -72,8 +72,11 @@
             
             {% for comment in ownerUser.comment_set.all %}
             <div class="commentBorder round">
-            <li class="commentUser">{{comment.user}}</li>
-            <div class="commentcenter">
+              <div class="commentcenter">
+              <a href="{% url 'user_detail' comment.user.id %}"  class="valign-wrapper">
+              <li class="commentUser"><img class="responsive-img avatarImg" src="{{comment.user.user_avatar_set.first.url}}"><span class="fill">{{comment.user}}</span></a></li>
+              </div>
+              <div class="commentcenter">
             <li class="commentBorder round wrap center">{{comment.content}}</li>
               </div>
             {% if comment.user.id == user.id %}
