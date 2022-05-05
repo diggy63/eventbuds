@@ -172,9 +172,6 @@ def going_event(request, event_id, user_id):
     except:
         user_event = User_Event.objects.create(user=user, event=event)
         user_event.save()
-        print(user_event)
-    # Event.objects.get(id=event_id).user_avatar.add(user_id)
-    # return redirect('/user')
     return redirect(f'/user/{user_id}')
 
 @login_required
@@ -246,19 +243,19 @@ def update_event(request, event_id):
 @login_required
 def update_details(request, event_id, user_id):
     photo_file = request.FILES.get('photo', None)
-    print(photo_file)
     event = Event.objects.get(id=event_id)
     event.event_name = request.POST.get('event_name')
     event.event_type = request.POST.get('event_type')
     event.location = request.POST.get('location')
     event.artist = request.POST.get('artist')
     event.description = request.POST.get('description')
+    # if there is no date given their will be an error
+    # so we must check because date feilds cant be null
     if request.POST.get('date') == "":
         print('nodate')
     else:
         event.date = request.POST.get('date')
     if photo_file:
-        print('here')
         s3 = boto3.client('s3')
         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
         try:
