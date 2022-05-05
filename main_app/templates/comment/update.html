@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<form action="{% url 'update_content' event_id comment.id user_id %}" method="POST">
+<form class="margintopvh" action="{% url 'update_content' event_id comment.id user_id %}" method="POST">
     {% csrf_token %}
     <label>Update Comment:</label>
     <input type="text" value="{{ comment.content }}" name="content">

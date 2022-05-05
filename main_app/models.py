@@ -22,7 +22,7 @@ EVENT_TYPES = (
 class Event(models.Model):
     event_name = models.CharField(max_length=100)
     event_type = models.CharField(
-        max_length=2,
+        max_length=100,
         choices = EVENT_TYPES,
         default=EVENT_TYPES[0][0]
     )
