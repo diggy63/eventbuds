@@ -187,6 +187,9 @@ body {
     border-radius: 10px;
   }
 
+  .redT {
+    color: red;
+  }
 
   @media only screen and (max-width: 800px){
 

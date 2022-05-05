@@ -2,6 +2,7 @@ from ast import Delete
 from email.mime import image
 from operator import indexOf
 from queue import Empty
+from tabnanny import check
 from django.shortcuts import render, redirect
 from django.http import Http404, HttpResponse
 from django.contrib.auth import login
@@ -286,6 +287,13 @@ def update_profile(request, user_id):
     photo_file = request.FILES.get('photo-file', None)
     user_bio = request.POST.get('bio', None)
     user_name = request.POST.get('username', None)
+    try:
+        check_name = User.objects.get(username=user_name)
+        if check_name.id != user_id:
+            error_name = "Username already taken."
+            return render(request, 'user/update.html', {'ownerUser': userView, 'error_name':error_name})
+    except:
+        print("New username")
     userView.bio = user_bio
     userView.user.username = user_name
     if photo_file:
