@@ -132,6 +132,7 @@ body {
   .commentBorder {
     border-style: solid;
     border-color: rgba(241,250,248) ;
+    margin: 5px;
   }
 
   .avatarImg {
