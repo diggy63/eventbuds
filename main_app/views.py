@@ -2,6 +2,7 @@ from ast import Delete
 from email.mime import image
 from operator import indexOf
 from queue import Empty
+from tabnanny import check
 from django.shortcuts import render, redirect
 from django.http import Http404, HttpResponse
 from django.contrib.auth import login
@@ -19,7 +20,7 @@ import uuid
 import boto3
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'catcollectorbucketdk'
+BUCKET = 'eventbuds'
 
 # Create your views here.
 def home(request):
@@ -61,9 +62,6 @@ def event_detail(request, event_id , user_id):
         show_going = True
     return render(request, 'events/detail.html', {'event':event , 'show_going': show_going} )
 
-# class EventCreate(CreateView):
-#     model = Event
-#     fields = '__all__'
 
 @login_required    
 def create_event(request):
@@ -175,9 +173,6 @@ def going_event(request, event_id, user_id):
     except:
         user_event = User_Event.objects.create(user=user, event=event)
         user_event.save()
-        print(user_event)
-    # Event.objects.get(id=event_id).user_avatar.add(user_id)
-    # return redirect('/user')
     return redirect(f'/user/{user_id}')
 
 @login_required
@@ -249,19 +244,19 @@ def update_event(request, event_id):
 @login_required
 def update_details(request, event_id, user_id):
     photo_file = request.FILES.get('photo', None)
-    print(photo_file)
     event = Event.objects.get(id=event_id)
     event.event_name = request.POST.get('event_name')
     event.event_type = request.POST.get('event_type')
     event.location = request.POST.get('location')
     event.artist = request.POST.get('artist')
     event.description = request.POST.get('description')
+    # if there is no date given their will be an error
+    # so we must check because date feilds cant be null
     if request.POST.get('date') == "":
         print('nodate')
     else:
         event.date = request.POST.get('date')
     if photo_file:
-        print('here')
         s3 = boto3.client('s3')
         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
         try:
@@ -289,6 +284,13 @@ def update_profile(request, user_id):
     photo_file = request.FILES.get('photo-file', None)
     user_bio = request.POST.get('bio', None)
     user_name = request.POST.get('username', None)
+    try:
+        check_name = User.objects.get(username=user_name)
+        if check_name.id != user_id:
+            error_name = "Username already taken."
+            return render(request, 'user/update.html', {'ownerUser': userView, 'error_name':error_name})
+    except:
+        print("New username added!")
     userView.bio = user_bio
     userView.user.username = user_name
     if photo_file:

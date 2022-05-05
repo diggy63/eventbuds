@@ -80,7 +80,7 @@
         {% for comment in event.comment_set.all %}
         
         <ul><a href="{% url 'user_detail' comment.user.id %}"  class="valign-wrapper">
-          <li class="commentUser"><img class="responsive-img avatarImg" src="{{comment.user.user_avatar_set.first.url}}"><span class="fill">{{comment.user}}</span></a></li>
+          <li class="commentUser"><img class="avatarImg" src="{{comment.user.user_avatar_set.first.url}}"><span class="fill">{{comment.user}}</span></a></li>
           <br>
           <li class="commentBorder round">{{comment.content}}</li>
 
@@ -112,7 +112,7 @@
           <li>
             <div class="flexy">
             <a href="{% url 'user_detail' user.user.user.id %}" class="valign-wrapper"
-              ><img class="responsive-img avatarImg" src="{{user.user.user.user_avatar_set.first.url}}">
+              ><img class="avatarImg" src="{{user.user.user.user_avatar_set.first.url}}">
               <span class="fill">{{user.user.user}}</span>
               </a>
             </div>

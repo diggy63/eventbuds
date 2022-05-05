@@ -3,6 +3,13 @@
 
 {% block content %}
 <h1 class="center margintopvh">Update Your Profile</h1>
+
+
+{% if error_name %}
+    <h4 class="redT center">{{ error_name }}</h4>
+{% endif %}
+    
+
 <div class="card">
 <form action="{%url 'update_profile' ownerUser.id %}" enctype="multipart/form-data" method="POST" class="card-panel center">
     {% csrf_token %}
@@ -16,6 +23,7 @@
     </div>
     <div class="card-content">
         <div class="col s6">
+            {{ error.message}}
     {% if ownerUser.url %}
     <img class="esponsive-img mediumImg" src="{{ownerUser.url}}">
     {% else %}
