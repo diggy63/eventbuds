@@ -67,13 +67,14 @@
   <div class="col s8">
     <div class="card round">
       <div class="card-content">
+        <h6>Leave a comment!</h6>
         <form
           method="POST"
           action="{% url 'create_comment' event.id user.id %}"
         >
           {% csrf_token %}
           <input type="textarea" name="content" />
-          <input type="submit" name="submit" />
+          <input class="btn" type="submit" name="submit" />
         </form>
         <div class="card round commentBorder">
           <div class="card-content">

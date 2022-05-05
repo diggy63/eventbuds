@@ -9,20 +9,20 @@
 <form action="{% url 'new_event' user.id %}" method="POST">
     {% csrf_token %}
     <label>Event Name:</label>
-    <input type="text" value="{{ event.event_name }}" name="event_name">
+    <input type="text" name="event_name">
     <label>Event Type:</label>
-    <input type="text" value="{{ event.event_type }}" name="event_type">
+    <input type="text" name="event_type">
     <label>Location:</label>
-    <input type="text" value="{{ event.location }}" name="location">
+    <input type="text" name="location">
     <label>Artist:</label>
-    <input type="text" value="{{ event.artist }}" name="artist">
-    <label>Image:</label>
-    <input type="text" value="{{ event.image }}" name="image">
+    <input type="text" name="artist">
+    <label>Image url:</label>
+    <input type="text" name="image">
     <label>Description:</label>
-    <input type="text" value="{{ event.description }}" name="description">
+    <input type="text" name="description">
     <label>Date:</label>
-    <input type="date" value="{{ event.date }}" name="date">
-    <input type="submit" class="btn" value="submit">
+    <input type="date" name="date">
+    <input type="submit" class="btn addEvent" value="add event">
 </form>
 </div>
 </div>
