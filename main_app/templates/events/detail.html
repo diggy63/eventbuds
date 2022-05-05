@@ -6,13 +6,12 @@
 </div>
 
 <div class="center"></div>
-<div class="row">
+<div class="row flex">
   <div class="col s6">
     <div class="card">
       <div class="card-content">
-        <a href="{% url 'update_event' event.id %}"
-          ><button class="btn">Update Event</button></a
-        >
+        <a href="{% url 'update_event' event.id %}"><button class="btn">Update Event</button></a>
+        <a href="{% url 'event_delete' event.id %} "><button class="btn">Delete</button></a>
         <div class="card">
           <div class="card-content">
             <div class="row">
@@ -42,20 +41,19 @@
         <!-- {{user.user_avatar_set.first.user_event_set.all}} -->
 
         {% if show_going == True %}
-        <a class="center" href="{% url 'going_event' event.id user.id %}"
+        <div class="center"><a class="center" href="{% url 'going_event' event.id user.id %}"
           ><button class="btn">Going to the Event</button></a
-        >
+        ></div>
         {% endif %}
         <br />
       </div>
     </div>
   </div>
-  <div class="col s6">
-    <div class="card">
-      <div class="card-content">
+  <div class="col s6 fillcard">
+    <div class="card fillcard">
+      <div class="card-content center">
         <img
-          id="event-photo"
-          class="responsive-img center"
+          class="responsive-img eventPhoto center"
           src="{{ event.image }}"
           alt="event photo"
         />

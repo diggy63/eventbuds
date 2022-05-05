@@ -4,6 +4,7 @@ body {
     flex-direction: column;
     background-image: url('/static/images/eventbg.jpg');
     background-size: cover;
+    font-family: 'League Spartan', sans-serif;
     
   }
 
@@ -129,4 +130,18 @@ body {
     margin: 5px;
     max-height: 100%;
     max-width: 100%;
+  }
+  .fillcard{
+    max-height: 100%;
+    max-width: 100%;
+  }
+  .eventPhoto {
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
   }
