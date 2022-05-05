@@ -145,3 +145,13 @@ body {
     flex-wrap: wrap;
     align-items: center;
   }
+
+  .wrap {
+    width: 80%;
+  }
+  .commentcenter{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: center;
+  }

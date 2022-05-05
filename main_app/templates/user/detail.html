@@ -3,85 +3,109 @@
   <h1 class="center">Profile</h1>
   <div class="card margintop">
     <div class="card-content center">
-      <img class="esponsive-img smallImg" src="{{ownerUser.url}}">
+      <img class="esponsive-img smallImg" src="{{ownerUser.url}}" />
       <div class="userTitle center">{{ ownerUser.user }}</div>
       {% if ownerUser.user.id == user.id %}
-      <a href="{% url 'get_update' ownerUser.id%}"><button class="btn right">Update profile</button></a>
+      <a href="{% url 'get_update' ownerUser.id%}"
+        ><button class="btn right">Update profile</button></a
+      >
       {% endif %}
     </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <div class="labelClass">Bio:</div>
+      {{ownerUser.bio}}
+      <br />
     </div>
-    <div class="card">
-      <div class="card-content">
-        <div class="labelClass"> Bio:</div>
-        {{ownerUser.bio}}
-        <br>
+  </div>
+  <div class="card center">
+    <div class="card-content">
+      <h2>Events</h2>
+      <div class="row">
+        {% for item in ownerUser.user_event_set.all %}
+        <div class="col s6">
+          <div class="card">
+            <div class="card-content">
+              {{item.event}}
+              <br />
+              {{item.event.event_type}}
+              <br />
+              {{item.event.date}}
+              <br />
+              <a href="{% url 'event_detail' item.event.id user.id %}"
+                ><button class="btn">Details</button></a
+              >
+
+              {% if user.id == ownerUser.user.id %}
+              <a href="{% url 'not_going' user.id item.event.id%}"
+                ><button class="btn">Not Going</button></a
+              >
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
-    </div>
-<div class="card center">
-  <div class="card-content">
-    <h2>Events</h2>
-    <div class="row">
-    {% for item in ownerUser.user_event_set.all  %}
-    <div class="col s6">
-    <div class="card">
+  </div>
+  <div class="row">
+    <div class="col s6 center">
+      <div class="card">
         <div class="card-content">
-    {{item.event}}
-    <br>
-    {{item.event.event_type}}
-    <br>
-    {{item.event.date}}
-    <br>
-    <a href="{% url 'event_detail' item.event.id user.id %}"><button class="btn">Details</button></a>
-    
-    
-    {% if user.id == ownerUser.user.id %}
-    <a href="{% url 'not_going' user.id item.event.id%}"><button class="btn">Not Going</button></a>
-    {% endif %}
-      
-
+          <h4>Leave A Comment</h4>
+          <div>
+            <form
+              method="POST"
+              action="{% url 'add_comment' ownerUser.user.id %}"
+            >
+              {% csrf_token %}
+              <textarea name="content"></textarea>
+              <br>
+              <input class="btn" type="submit" name="submit" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s6 center">
+      <div class="card">
+        <div class="card-content">
+          <h4>Comment Section</h4>
+          <ul class="center">
+            
+            {% for comment in ownerUser.comment_set.all %}
+            <div class="commentBorder round">
+            <li class="commentUser">{{comment.user}}</li>
+            <div class="commentcenter">
+            <li class="commentBorder round wrap center">{{comment.content}}</li>
+              </div>
+            {% if comment.user.id == user.id %}
+            <a
+              href="{% url 'delete_profile_comment' ownerUser.user.id comment.id %}"
+              ><button class="btn">Delete</button></a
+            >
+              </div>
+            {% endif %} {% empty %}
+            <p>No comments yet</p>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
-  </div>
-    {% endfor %} 
-  </div>
-  </div>
-  </div>
-  <div>
-    <form method="POST" action="{% url 'add_comment' ownerUser.user.id %}">
-        {% csrf_token %}
-        <input type="textarea" name="content" />
-        <input type="submit" name="submit" />
-      </form>
-  </div>
-  <div>
-    {% for comment in ownerUser.comment_set.all %}
-    <ul>
-      <li>{{comment.user}}</li>
-      <li>{{comment.content}}</li>
-    
-      {% if comment.user.id == user.id %}
-        <a href="{% url 'delete_profile_comment' ownerUser.user.id comment.id %}"><button>Delete</button></a>
-        
-      {% endif %}
+</div>
 
-      {% empty %}
-        <p>No comments yet</p>
-      {% endfor %}
-        
-  </div>
-
-    <!-- <form action="{% url 'add_bio' user.id%}" method="POST">
+<!-- <form action="{% url 'add_bio' user.id%}" method="POST">
       {% csrf_token %}
       <input type="textarea" name="bio">
       <input type="submit" class="btn" value="upload bio">
     </form> -->
-    <!-- <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+<!-- <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
     {% csrf_token %}
     <input type="file" name="photo-file">
     <br><br>
     <input type="submit" class="btn" value="Upload Photo">
   </form> -->
-    
 
-    
 {% endblock content %}
