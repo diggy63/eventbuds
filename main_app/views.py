@@ -186,11 +186,9 @@ def ticketmaster_create(request, event_id, user_id):
     second_embed = the_event.get('_embedded', {})
     if second_embed:
         event_name = the_event['name']
-        description = urllib.parse.unquote(the_event['url']) # url decoder then split the tracker off
-        description = description.split('?u=')[1]
         event_type = the_event.get('classifications', [])
         if event_type:
-            event_type = event_type[0]['segment']['name'] + ' - ' + event_type[0]['subGenre']['name']
+            event_type = event_type[0]['segment']['name']
         else:
             event_type = 'None'
         location = the_event['_embedded']['venues'][0].get('name', 'None')
@@ -212,7 +210,7 @@ def ticketmaster_create(request, event_id, user_id):
                     'location': location,
                     'artist':artist,
                     'image':event_image,
-                    'description':description,
+                    'description':'None',
                     'date':date})
         return redirect(f'/events/{TicketMasterEvent.objects.get(url_ticketmaster=event_id).id}/{user_id}')
     else:
