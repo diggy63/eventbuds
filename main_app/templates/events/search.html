@@ -24,7 +24,7 @@
       <th>Venue</th>
       <th>Type</th>
       <th>Date</th>
-      <th>Create</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -40,7 +40,7 @@
       <th>
         <form method="POST" action="{% url 'ticketmaster_create' event.id user.id %}">
           {% csrf_token %}
-          <input type="submit" class="btn" value="Create event" />
+          <input type="submit" class="btn" value="Details" />
         </form>
       </th>
     </tr>
