@@ -262,7 +262,9 @@ def update_profile(request, user_id):
     userView = User_Avatar.objects.get(id=user_id)
     photo_file = request.FILES.get('photo-file', None)
     user_bio = request.POST.get('bio', None)
+    user_name = request.POST.get('username', None)
     userView.bio = user_bio
+    userView.user.username = user_name
     if photo_file:
         s3 = boto3.client('s3')
         # need a unique "key" for S3 / needs image file extension too
@@ -276,7 +278,8 @@ def update_profile(request, user_id):
             userView.url = url
             print("photo was sucessful")
         except:
-            print('An error occurred uploading to S3.')    
+            print('An error occurred uploading to S3.')
+    userView.user.save()           
     userView.save()
     return redirect(f'/user/{userView.user.id}')
 
