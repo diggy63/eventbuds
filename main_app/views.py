@@ -7,6 +7,8 @@ from django.http import Http404, HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from dotenv import load_dotenv
 from psycopg2 import Date
 import urllib
@@ -42,10 +44,12 @@ def signup(request):
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
 
+@login_required
 def events_index(request):
     events = Event.objects.all()
     return render(request, 'events/index.html', {'events': events})
 
+@login_required
 def event_detail(request, event_id , user_id):
     show_going = True
     event = Event.objects.get(id=event_id)
@@ -60,10 +64,12 @@ def event_detail(request, event_id , user_id):
 # class EventCreate(CreateView):
 #     model = Event
 #     fields = '__all__'
-    
+
+@login_required    
 def create_event(request):
     return render(request, 'events/create.html')
-    
+
+@login_required    
 def new_event(request):
     event = Event.objects.create(
         event_name=request.POST.get('event_name'),
@@ -77,20 +83,24 @@ def new_event(request):
     event.save()
     return redirect('/events/')
 
+@login_required
 def create_comment(request, event_id, user_id):
     event = Event.objects.get(id=event_id)
     comment = Comment.objects.create(user=request.user, event=event, content=request.POST.get('content', ''))
     return redirect(f'/events/{event_id}/{user_id}')
 
+@login_required
 def delete_comment(request, event_id, comment_id, user_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
     return redirect(f'/events/{event_id}/{user_id}')
 
+@login_required
 def update_comment(request, event_id, comment_id, user_id):
     comment = Comment.objects.get(id=comment_id)
     return render(request, 'comment/update.html', {'comment': comment, 'event_id': event_id, 'user_id':user_id}) 
 
+@login_required
 def update_content(request, event_id, comment_id, user_id):
     comment = Comment.objects.get(id=comment_id)
     content = request.POST.get('content')
@@ -99,7 +109,7 @@ def update_content(request, event_id, comment_id, user_id):
     
     return redirect(f'/events/{event_id}/{user_id}')
     
-
+@login_required
 def search(request):
     load_dotenv()
     query = request.GET.get('q')
@@ -114,10 +124,12 @@ def search(request):
         events[idx]['venues'] = venues
     return render(request, 'events/search.html', {'events': events})
 
+@login_required
 def user_detail(request, user_id):
     viewUser = User_Avatar.objects.get(user_id=user_id)
     return render(request, 'user/detail.html', {'ownerUser': viewUser})
 
+@login_required
 def add_photo(request, user_id):
   # photo-file will be the "name" attribute on the <input type="file">
   photo_file = request.FILES.get('photo-file', None)
@@ -141,6 +153,7 @@ def add_photo(request, user_id):
       print('An error occurred uploading to S3.')
   return redirect(f'/user/{user_id}')
 
+@login_required
 def going_event(request, event_id, user_id):
     user = User_Avatar.objects.get(user_id=user_id)
     event = Event.objects.get(id=event_id)
@@ -175,6 +188,7 @@ def going_event(request, event_id, user_id):
 #         else:
 #             return render(request, 'events/search.html', {'events': []})
 
+@login_required
 def ticketmaster_create(request, event_id, user_id):
     load_dotenv()
     key = os.getenv('ACCESS_TOKEN')
@@ -216,15 +230,18 @@ def ticketmaster_create(request, event_id, user_id):
     else:
         return redirect(f'/events/search')  
 
+@login_required
 def create_user(request):
     return render(request, 'user/create.html')
 
+@login_required
 def add_bio(request, user_id):
     user = User_Avatar.objects.get(user_id=user_id)
     user.bio = request.GET.get('bio')
     user.save()
     return redirect('/user')
 
+@login_required
 def not_going(request, user_id, event_id):
     user = User_Avatar.objects.get(user_id=user_id)
     event = Event.objects.get(id=event_id)
@@ -232,10 +249,12 @@ def not_going(request, user_id, event_id):
     delete_connect.delete()
     return redirect(f'/user/{user_id}')
 
+@login_required
 def update_event(request, event_id):
     event = Event.objects.get(id=event_id)
     return render(request, 'events/update.html', {'event': event})  
 
+@login_required
 def update_details(request, event_id, user_id):
     event = Event.objects.get(id=event_id)
     event.event_name = request.POST.get('event_name')
@@ -248,14 +267,16 @@ def update_details(request, event_id, user_id):
     event.save()
     return redirect(f'/events/{event_id}/{user_id}')
 
-class EventDelete(DeleteView):
+class EventDelete(LoginRequiredMixin, DeleteView):
     model = Event
     success_url = '/events/'
 
+@login_required
 def get_update(request, user_id):
     viewUser = User_Avatar.objects.get(id=user_id)
     return render(request, 'user/update.html', {'ownerUser': viewUser})
 
+@login_required
 def update_profile(request, user_id):
     userView = User_Avatar.objects.get(id=user_id)
     photo_file = request.FILES.get('photo-file', None)
@@ -281,12 +302,14 @@ def update_profile(request, user_id):
     userView.save()
     return redirect(f'/user/{userView.user.id}')
 
+@login_required
 def add_comment(request, user_id):
     userProfile = User_Avatar.objects.get(user_id=user_id)
     comment = Comment.objects.create(user=request.user, profile=userProfile, content=request.POST.get('content', ''))
     comment.save()
     return redirect(f'/user/{user_id}')
 
+@login_required
 def delete_profile_comment(request, user_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
