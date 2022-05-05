@@ -191,6 +191,10 @@ body {
     color: red;
   }
 
+  .linkT {
+    color:#48cae4;
+  }
+
   @media only screen and (max-width: 800px){
 
     .btn {
