@@ -6,7 +6,7 @@
 <h1 class="margintopvh center">Add An Event</h1>
 <div class="card round">
     <div class="card-content">
-<form action="{% url 'new_event' user.id %}" method="POST">
+<form action="{% url 'new_event' user.id %}" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     <label>Event Name:</label>
     <input type="text" name="event_name">
@@ -16,12 +16,12 @@
     <input type="text" name="location">
     <label>Artist:</label>
     <input type="text" name="artist">
-    <label>Image url:</label>
-    <input type="text" name="image">
     <label>Description:</label>
     <input type="text" name="description">
     <label>Date:</label>
     <input type="date" name="date">
+    <label>Image:</label>
+    <input type="file" name="photo">
     <input type="submit" class="btn addEvent" value="add event">
 </form>
 </div>
