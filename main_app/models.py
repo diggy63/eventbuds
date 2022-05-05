@@ -36,6 +36,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
 
+
 class User_Event(models.Model):
     user = models.ForeignKey(User_Avatar, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
