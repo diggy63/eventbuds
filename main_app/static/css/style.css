@@ -79,7 +79,7 @@ body {
     margin-top: 0px;
   }
 
-  .round{
+  .round, .card{
     border-radius: 10px;
   }
 
@@ -154,4 +154,8 @@ body {
     flex-direction: column;
     align-content: flex-start;
     align-items: center;
+  }
+
+  .card{
+    border-radius: 10px;
   }
