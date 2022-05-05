@@ -14,7 +14,7 @@ from psycopg2 import Date
 import urllib
 from .models import Event, Comment, TicketMasterEvent
 import requests, os
-from .models import Event, Comment, User_Avatar, User_Event
+from .models import Event, Comment, User_Avatar, User_Event, User
 import uuid
 import boto3
 
@@ -68,9 +68,9 @@ def event_detail(request, event_id , user_id):
 @login_required    
 def create_event(request):
     return render(request, 'events/create.html')
-
+  
 @login_required    
-def new_event(request):
+def new_event(request, user_id):
     event = Event.objects.create(
         event_name=request.POST.get('event_name'),
         event_type=request.POST.get('event_type'),
@@ -78,7 +78,8 @@ def new_event(request):
         artist=request.POST.get('artist'),
         image=request.POST.get('image'),
         description=request.POST.get('description'),
-        date=request.POST.get('date')
+        date=request.POST.get('date'),
+        user_id=user_id
         )
     event.save()
     return redirect('/events/')
