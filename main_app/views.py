@@ -276,7 +276,7 @@ def update_profile(request, user_id):
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
             # we can assign to cat_id or cat (if you have a cat object)
             userView.url = url
-            print("photo was sucessful")
+            print("Photo upload sucessful.")
         except:
             print('An error occurred uploading to S3.')
     userView.user.save()           
