@@ -2,7 +2,8 @@
 
 
 {% block content %}
-
+<div class="card margintopvh">
+    <div class="card-content">
 <form class="margintopvh" action="{% url 'update_content' event_id comment.id user_id %}" method="POST">
     {% csrf_token %}
     <label>Update Comment:</label>
@@ -10,6 +11,8 @@
     <input type="submit" class="btn" value="submit">
 
 </form>
+</div>
+</div>
     
 {% endblock content %}
     
