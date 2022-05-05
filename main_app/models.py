@@ -2,10 +2,30 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+EVENT_TYPES = (
+    ('M', 'Music'),
+    ('V', 'Visual Arts'),
+    ('P', 'Performing Arts'),
+    ('FI', 'Film'),
+    ('L', 'Lectures'),
+    ('FA', 'Fashion'),
+    ('FD', 'Food and Drink'),
+    ('FF', 'Festivals and Fairs'),
+    ('C', 'Charities'),
+    ('S', 'Sports'),
+    ('N', 'Nightlife'),
+    ('KF', 'Kids and Family'),
+    ('O', 'Others')
+)
+
 # Create your models here.
 class Event(models.Model):
     event_name = models.CharField(max_length=100)
-    event_type = models.CharField(max_length=100)
+    event_type = models.CharField(
+        max_length=100,
+        choices = EVENT_TYPES,
+        default=EVENT_TYPES[0][0]
+    )
     location = models.CharField(max_length=100)
     artist = models.CharField(max_length=100)
     image = models.TextField(max_length=250)

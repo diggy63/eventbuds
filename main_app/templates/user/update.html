@@ -4,7 +4,7 @@
 {% block content %}
 <h1 class="center margintopvh">{{ownerUser.user}}</h1> 
 <br>
-<h2 class="center">Edit your profile</h2>
+<h2 class="center">Edit Your Profile</h2>
 <div class="card">
 <form action="{%url 'update_profile' ownerUser.id %}" enctype="multipart/form-data" method="POST" class="card-panel center">
     {% csrf_token %}
@@ -19,7 +19,7 @@
     {% if ownerUser.url %}
     <img class="esponsive-img mediumImg" src="{{ownerUser.url}}">
     {% else %}
-    <h4>You have no user photo</h4>
+    <h5>Upload a photo!</h5>
     {% endif %}
     <br>
     <input type="file" name="photo-file">

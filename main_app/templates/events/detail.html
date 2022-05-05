@@ -18,21 +18,21 @@
             <div class="row">
               <div class="col s3">
         <ul>
+          <li>Date:</li>
           <li>Type:</li>
           <li>Location:</li>
           <li>Artist:</li>
-          <li>Description</li>
-          <li>Date:</li>
+          <li>Description:</li>
           <li>{{ event.url_ticketmaster }}</li>
         </ul>
         </div>
         <div class="col s9">
           <ul>
+          <li>{{ event.date }}</li>
           <li>{{ event.event_type }}</li>
           <li>{{ event.location }}</li>
           <li>{{ event.artist }}</li>
-          <li>{{ event.description}}</li>
-          <li>{{ event.date }}</li>
+          <li>{{ event.description }}</li>
           <li>{{ event.url_ticketmaster }}</li>
           </ul>
         </div>  
@@ -89,7 +89,7 @@
             <a href="{% url 'update_comment' event.id comment.id user.id %}"
               ><button class="btn">update</button></a
             >       
-          <a href="{% url 'delete_comment' event.id comment.id user.id %}"><button class="btn">X</button></a>
+          <a href="{% url 'delete_comment' event.id comment.id user.id %}"><button class="btn">Delete</button></a>
           </li>
           {% endif %}
         </ul>
@@ -104,7 +104,7 @@
   <div class="col s4">
     <div class="card oneH">
       <div class="card-content oneH">
-        <h5>People going to the event</h5>
+        <h5>Event Attendees:</h5>
         <ul>
           {% for user in event.user_event_set.all %}
           <br />
