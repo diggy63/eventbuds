@@ -26,7 +26,11 @@
       <td>{{event.date}}</td>
       <th>
         <a href="{% url 'event_detail' event.id user.id%} "><button class="btn">Details</button></a>
+        
+        {% if user.id == event.user.id %}
         <a href="{% url 'event_delete' event.id %} "><button class="btn">Delete</button></a>
+        {% endif %}
+          
     </th>   
         
     
