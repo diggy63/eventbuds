@@ -24,6 +24,7 @@ Python | Django | PostgreSQL | CSS | Materializer | Heroku | Ticketmaster API | 
 
 ## Getting Started:  
 https://eventbuds.herokuapp.com/
+
 ## Icebox:  
 - Public vs private connection.
 - Private messages to another user.
